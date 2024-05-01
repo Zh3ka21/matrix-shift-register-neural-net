@@ -3,7 +3,8 @@ import numpy as np
 import re
 
 from helpers.utils import val, gcd, power
-
+import sys
+sys.stdout = open('output.txt', 'w')
 # Extracting data from json 
 with open('irreducible_polynoms.json') as f:
     data = json.load(f)
@@ -137,23 +138,35 @@ def main():
     # Create lists to store matrices A and B
     matrices_A = []
     matrices_B = []
-
     # Creating matrices
     for i in range(len(parameters_list) - 1):
         degreeA, first_digitA, second_digitA = parameters_list[i]
-        degreeB, first_digitB, second_digitB = parameters_list[i + 1]
-        
-        if val(degreeA, first_digitA, degreeB, first_digitB):
-            print("Error")
-            continue
-        
-        A = PolynomialCalculator(degreeA, first_digitA, str(second_digitA))
-        A.build_polynomial_matrix(True)
-        B = PolynomialCalculator(degreeB, first_digitB, str(second_digitB))
-        B.build_polynomial_matrix(False)
-        
-        matrices_A.append(A.get_matrix())
-        matrices_B.append(B.get_matrix())
+        for j in range(i + 1, len(parameters_list) - 1):
+            degreeB, first_digitB, second_digitB = parameters_list[j]
+
+            if val(degreeA, first_digitA, degreeB, first_digitB):
+                print("Error")
+                print(degreeA, first_digitA, degreeB, first_digitB)
+                continue
+
+            A = PolynomialCalculator(degreeA, first_digitA, str(second_digitA))
+            A.build_polynomial_matrix(True)
+            B = PolynomialCalculator(degreeB, first_digitB, str(second_digitB))
+            B.build_polynomial_matrix(False)
+
+            matrices_A.append(A.get_matrix())
+            matrices_B.append(B.get_matrix())
+            MatrixS = S(degreeA, degreeB)
+
+
+            while MatrixS.r <= MatrixS.rows:
+                MatrixS.add_one_to_diagonal()
+                print("----------------")
+                print(degreeA, first_digitA, degreeB, first_digitB)
+                print(MatrixS.__str__())
+                print("----------------")
+                sub = MatrixS.calculate(A.matrix, B.matrix)
+
 
     # Save matrices A to file
     save_matrices_to_file(matrices_A, 'matrices_A.txt')
@@ -163,22 +176,14 @@ def main():
 
 
 
+
+
+
         
         
-        #MatrixS = S(degreeA, degreeB)
-        
-        #print("Період послідовності", MatrixS.T)
-        #while MatrixS.r <= MatrixS.rows:
-        #    MatrixS.add_one_to_diagonal()
-        #    print("Матриця S", MatrixS.r)
-        #    print(MatrixS.__str__())
-        #    print("Вага Хемінгу", MatrixS.hamming_weight())
-        #    sub = MatrixS.calculate(A.matrix, B.matrix)
-        #    print(sub)
-        #    acf = MatrixS.get_acf()
-        #    # print(acf)
-        #    #visualization(acf, MatrixS.r)
+
 
 
 if __name__ == "__main__":
     main()
+    sys.stdout.close()

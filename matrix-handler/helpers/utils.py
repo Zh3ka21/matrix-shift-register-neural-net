@@ -2,21 +2,24 @@
 def val(degreeA, first_digitA, degreeB, first_digitB):
     denominator = gcd(power(degreeA), power(degreeB))
     if denominator != 1:
+        print("gcd not 1")
         return True
 
     numerator = power(degreeA)
     denominator = gcd(numerator, first_digitA)
     result = numerator / denominator
     if result != numerator:
+        print("TA not max")
         return True
 
     numerator = power(degreeB)
     denominator = gcd(numerator, first_digitB)
     result = numerator / denominator
     if result != numerator:
+        print("TB not max")
         return True
 
-    return degreeA > degreeB
+    return degreeA >= degreeB
 
 def power(n):
     return 2 ** n - 1
