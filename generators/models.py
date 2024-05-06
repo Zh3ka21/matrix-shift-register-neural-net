@@ -8,4 +8,4 @@ class Polynomial(models.Model):
     letter = models.CharField(max_length=1)
 
     def __str__(self):
-        return f"Степінь: {self.degree}, Перше число: {self.first_number}, Друге число: {self.second_number}, Буква: {self.letter}"
+        return f"{self.degree} {self.first_number} {self.second_number} {self.letter}"

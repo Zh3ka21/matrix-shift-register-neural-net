@@ -1,61 +1,37 @@
 {% extends 'generators/base.html' %}
-
+{% load static %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <label for="numberSelect" class="form-label">Оберіть ступінь полінома:</label>
-            <select class="form-select" id="numberSelect">
-                {% for degree in degrees %}
-                    <option value="{{ degree }}">{{ degree }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-6">
-            <label for="elementSelect" class="form-label">Оберіть поліном:</label>
-            <select class="form-select" id="elementSelect" disabled>
-                <option value="">Оберіть ступінь вище</option>
-            </select>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="numberSelect" class="form-label">Оберіть ступінь полінома:</label>
+                <select class="form-select" id="numberSelect">
+                    {% for degree in degrees %}
+                        <option value="{{ degree }}">{{ degree }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="elementSelect" class="form-label">Оберіть поліном:</label>
+                <select class="form-select" id="elementSelect" disabled>
+                    <option value="">Оберіть ступінь вище</option>
+                </select>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    // Получаем ссылки на выбранные элементы
-    const numberSelect = document.getElementById('numberSelect');
-    const elementSelect = document.getElementById('elementSelect');
+    <!-- Кнопка для побудови матриці -->
+    <div class="container mt-4">
+        <button id="buildMatrixButton" class="btn btn-primary">Побудувати матрицю</button>
+    </div>
 
-    // Функция для обновления второго списка в зависимости от выбранного числа
-    function updateElementList(selectedNumber) {
-        // Очищаем второй список
-        elementSelect.innerHTML = '';
+    <div id="matrix-container" class="container mt-4">
+        <!-- Початкова матриця буде додана тут -->
+    </div>
 
-        // Отправляем AJAX-запрос на сервер для получения списка полиномов
-        fetch(`/get_polynomials/?degree=${selectedNumber}`)
-            .then(response => response.json())
-            .then(data => {
-                // Добавляем полученные полиномы в список
-                data.forEach(polynomial => {
-                    const option = document.createElement('option');
-                    option.value = polynomial.id;
-                    option.textContent = `${polynomial.first_number} ${polynomial.second_number} ${polynomial.letter}`;
-                    elementSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Ошибка при получении списка полиномов:', error);
-            });
-    }
+    <div id="result-container" class="container mt-4">
+        <!-- Результати множення будуть додані тут -->
+    </div>
 
-    // Вызываем функцию обновления списка при изменении выбранного числа
-    numberSelect.addEventListener('change', function () {
-        const selectedNumber = parseInt(numberSelect.value);
-        if (selectedNumber) {
-            updateElementList(selectedNumber);
-            elementSelect.disabled = false;
-        } else {
-            elementSelect.disabled = true;
-        }
-    });
-</script>
+    <script src="{% static 'js/srwf.js' %}"></script>
 {% endblock content %}

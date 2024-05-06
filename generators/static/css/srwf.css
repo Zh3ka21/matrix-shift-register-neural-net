@@ -1,0 +1,39 @@
+.matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.matrix-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+.scroll-x {
+   overflow-x: scroll;
+   white-space: nowrap;
+}
+#matrix-container {
+    max-height: 200px; /* Максимальна висота контейнера */
+    overflow-y: auto; /* Додавання вертикальної прокрутки при необхідності */
+}
+
+#result-container {
+    max-height: 200px; /* Максимальна висота контейнера результатів */
+    overflow-y: auto; /* Додавання вертикальної прокрутки при необхідності */
+}
+
+.matrix-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.matrix-table tr:hover {
+    background-color: #ddd;
+}
+
+.matrix-table td:first-child {
+    width: 30px; /* Змінюємо ширину стовпчика */
+    background-color: #f0f0f0; /* Задаємо колір фону */
+    color: #333; /* Задаємо колір тексту */
+    text-align: center; /* Вирівнюємо текст по центру */
+    font-weight: bold; /* Робимо текст жирним */
+}
