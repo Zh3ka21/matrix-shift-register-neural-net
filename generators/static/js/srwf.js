@@ -2,7 +2,7 @@
 function handleDegreeChange() {
     const selectedNumber = numberSelect.value;
     if (selectedNumber) {
-        fetch(`/get_polynomials/?degree=${selectedNumber}`)
+        fetch(`/get_polynomials_view/?degree=${selectedNumber}`)
             .then(response => response.json())
             .then(data => {
                 elementSelect.innerHTML = '';
@@ -35,11 +35,11 @@ function handleDegreeChange() {
     }
 }
 
+// Універсальна функція для побудови таблиць
 function generateMatrixHTML(matrixData) {
     const table = document.createElement('table');
     table.classList.add('matrix-table');
     const tableBody = document.createElement('tbody');
-
     matrixData.forEach((row, rowIndex) => {
         const tableRow = document.createElement('tr');
         row.forEach((cell, cellIndex) => {
@@ -56,11 +56,23 @@ function generateMatrixHTML(matrixData) {
     table.appendChild(tableBody);
     return table;
 }
+
+//функція для додавання до контейнера
+function appendListToContainer(list, container) {
+    list.forEach(number => {
+        const span = document.createElement('span');
+        span.textContent = number + ' ';
+        container.appendChild(span);
+    });
+}
+
+//функція для відображення елементів з сервера
 function handlePolynomialOperations() {
+    // зчитування елементів
     const selectedPolynomialId = elementSelect.value;
-    const selectedNumber = initialStateSelect.value; // Зчитуємо значення третього селекту
+    const selectedNumber = initialStateSelect.value;
     if (selectedPolynomialId && selectedNumber) {
-        fetch(`/handle_matrix_operations/?polynomial_id=${selectedPolynomialId}&select=${selectedNumber}`) // Передаємо значення третього селекту на сервер
+        fetch(`/handle_matrix_operations_view/?polynomial_id=${selectedPolynomialId}&select=${selectedNumber}`)// передача параметрів на сервер
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -74,25 +86,20 @@ function handlePolynomialOperations() {
                 binarySequenceContainer.innerHTML = '';
                 const propertyContainer = document.getElementById('property-container');
                 propertyContainer.innerHTML = '';
+                const polyContainer = document.getElementById('poly-container');
+                polyContainer.innerHTML = '';
 
-                const matrixTable = generateMatrixHTML(data.matrix);
+                const matrixTable = generateMatrixHTML(data.result['structure_matrix']);
                 matrixContainer.appendChild(matrixTable);
 
-                const resultTable = generateMatrixHTML(data.result_array);
+                const resultTable = generateMatrixHTML(data.result['state']);
                 resultContainer.appendChild(resultTable);
 
-                data.sequence.forEach(number => {
-                    const span = document.createElement('span');
-                    span.textContent = number + ' ';
-                    sequenceContainer.appendChild(span);
-                });
-                data.binary_sequence.forEach(number => {
-                    const span = document.createElement('span');
-                    span.textContent = number + ' ';
-                    binarySequenceContainer.appendChild(span);
-                });
-                propertyContainer.append('Вага Хемінгу ' + data.hg + '; T(очікуване) ' + data.T_e  + '; T(реальне) ' + data.T_r);
+                appendListToContainer(data.result['sequence'], sequenceContainer);
+                appendListToContainer(data.result['binary_sequence'], binarySequenceContainer);
 
+                propertyContainer.append('Вага Хемінгу ' + data.result['hg'] + '; T(очікуване) ' + data.result['T_e'] + '; T(реальне) ' + data.result['T_r']);
+                polyContainer.append(data.result['poly'])
             })
             .catch(error => {
                 console.error('Помилка при отриманні результатів операцій з матрицею:', error);
