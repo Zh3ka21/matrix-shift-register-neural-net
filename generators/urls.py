@@ -6,5 +6,5 @@ urlpatterns = [
     path('msr/', views.msr, name='msr'),
     path('srwf/', views.srwf, name='srwf'),
     path('get_polynomials/', views.get_polynomials, name='get_polynomials'),
-    path('handle_matrix_operations/', views.handle_matrix_operations, name='get_polynomial_matrix')
+    path('handle_matrix_operations/', views.handle_matrix_operations, name='handle_matrix_operations')
 ]

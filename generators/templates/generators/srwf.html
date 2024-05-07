@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="numberSelect" class="form-label">Оберіть ступінь полінома:</label>
                 <select class="form-select" id="numberSelect">
                     {% for degree in degrees %}
@@ -11,10 +11,16 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="elementSelect" class="form-label">Оберіть поліном:</label>
                 <select class="form-select" id="elementSelect" disabled>
-                    <option value="">Оберіть ступінь вище</option>
+                    <option value="">Оберіть ступінь</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="initialStateSelect" class="form-label">Оберіть числа для початкового стану:</label>
+                <select class="form-select" id="initialStateSelect" name="initialStateSelect" disabled>
+                    <option value="">Оберіть ступінь</option>
                 </select>
             </div>
         </div>
@@ -33,5 +39,8 @@
         <!-- Результати множення будуть додані тут -->
     </div>
 
+    <div id="sequence-container" class="container mt-4">ф
+        <!-- Послідовність чисел буде додана тут -->
+    </div>
     <script src="{% static 'js/srwf.js' %}"></script>
 {% endblock content %}
