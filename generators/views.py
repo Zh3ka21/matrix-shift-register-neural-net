@@ -22,14 +22,12 @@ def get_polynomials(request):
     return JsonResponse(list(polynomials), safe=False)
 
 def handle_matrix_operations(request):
+
     polynomial_id = request.GET.get('polynomial_id')
     polynomial = Polynomial.objects.get(pk=polynomial_id)
-
-    selected_number = request.POST.get('initialStateSelect')
-    print(selected_number)
-    #binary_representation = format(selected_number, f'0{polynomial.degree}b')
-
-
+    print(polynomial)
+    selected_number = int(request.GET.get('select'))
+    binary_representation = format(selected_number, f'0{int(polynomial.degree)}b')
 
     decimal_number = int(str(polynomial.second_number), 8)
     binary_number = bin(decimal_number)[2:]
@@ -40,16 +38,15 @@ def handle_matrix_operations(request):
         row = [0] * polynomial.degree
         row[i] = 1
         matrix.append(row)
-    lst = [0] * polynomial.degree
-     # Обчислюємо послідовність чисел
-    lst[-1] = 1
+
+    lst = [int(i) for i in binary_representation]
     lim = lst
     matrices = []
     matrices.append(lst)
     sequence = []
 
     while True:
-        sequence.append(lst[-1])  # Додаємо останній елемент поточного масиву до послідовності
+        sequence.append(lst[-1])
         result_array = []
 
         for row in matrix:
@@ -62,4 +59,15 @@ def handle_matrix_operations(request):
             break
         matrices.append(result_array)
 
-    return JsonResponse({'matrix': matrix, 'result_array': matrices, 'sequence': sequence})
+    binary_sequence = [1 if i == 0 else -1 for i in sequence]
+    T = pow(2, polynomial.degree) - 1
+    hg = len([i for i in sequence if i == 1])
+    T_e = T / find_gcd(T, polynomial.first_number)
+    T_r = len(sequence)
+    return JsonResponse({'matrix': matrix, 'result_array': matrices, 'sequence': sequence, 'binary_sequence': binary_sequence,
+                         'hg': hg, 'T_e': T_e, 'T_r': T_r})
+
+def find_gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a

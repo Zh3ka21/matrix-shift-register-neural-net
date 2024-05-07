@@ -3,6 +3,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
+
             <div class="col-md-4">
                 <label for="numberSelect" class="form-label">Оберіть ступінь полінома:</label>
                 <select class="form-select" id="numberSelect">
@@ -23,6 +24,7 @@
                     <option value="">Оберіть ступінь</option>
                 </select>
             </div>
+
         </div>
     </div>
 
@@ -39,8 +41,24 @@
         <!-- Результати множення будуть додані тут -->
     </div>
 
-    <div id="sequence-container" class="container mt-4">ф
+    <div id="property-container" class="container mt-4">
+        <!-- Властивості будуть додані тут -->
+    </div>
+
+    <div id="sequence-container" class="container mt-4">
         <!-- Послідовність чисел буде додана тут -->
     </div>
+
+    <div id="binary-sequence-container" class="container mt-4">
+        <!-- Послідовність бінарних чисел буде додана тут -->
+    </div>
     <script src="{% static 'js/srwf.js' %}"></script>
+
+    <script>
+        const buildMatrixButton = document.getElementById('buildMatrixButton');
+        buildMatrixButton.addEventListener('click', handlePolynomialOperations);
+
+        const numberSelect = document.getElementById('numberSelect');
+        numberSelect.addEventListener('change', handleDegreeChange);
+    </script>
 {% endblock content %}

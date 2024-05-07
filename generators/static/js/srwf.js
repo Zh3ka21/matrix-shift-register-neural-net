@@ -24,6 +24,7 @@ function handleDegreeChange() {
                 }
                 console.log(thirdSelect)
                 thirdSelect.disabled = false;
+
             })
             .catch(error => {
                 console.error('Помилка при отриманні списку поліномів:', error);
@@ -55,11 +56,11 @@ function generateMatrixHTML(matrixData) {
     table.appendChild(tableBody);
     return table;
 }
-
 function handlePolynomialOperations() {
     const selectedPolynomialId = elementSelect.value;
-    if (selectedPolynomialId) {
-        fetch(`/handle_matrix_operations/?polynomial_id=${selectedPolynomialId}`)
+    const selectedNumber = initialStateSelect.value; // Зчитуємо значення третього селекту
+    if (selectedPolynomialId && selectedNumber) {
+        fetch(`/handle_matrix_operations/?polynomial_id=${selectedPolynomialId}&select=${selectedNumber}`) // Передаємо значення третього селекту на сервер
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -68,7 +69,11 @@ function handlePolynomialOperations() {
                 const resultContainer = document.getElementById('result-container');
                 resultContainer.innerHTML = '';
                 const sequenceContainer = document.getElementById('sequence-container');
-                sequenceContainer.innerHTML = ''; // Очищаємо контейнер для послідовності
+                sequenceContainer.innerHTML = '';
+                const binarySequenceContainer = document.getElementById('binary-sequence-container');
+                binarySequenceContainer.innerHTML = '';
+                const propertyContainer = document.getElementById('property-container');
+                propertyContainer.innerHTML = '';
 
                 const matrixTable = generateMatrixHTML(data.matrix);
                 matrixContainer.appendChild(matrixTable);
@@ -76,12 +81,18 @@ function handlePolynomialOperations() {
                 const resultTable = generateMatrixHTML(data.result_array);
                 resultContainer.appendChild(resultTable);
 
-
                 data.sequence.forEach(number => {
                     const span = document.createElement('span');
-                    span.textContent = number + ' '; // Додаємо пробіл після кожного числа
+                    span.textContent = number + ' ';
                     sequenceContainer.appendChild(span);
                 });
+                data.binary_sequence.forEach(number => {
+                    const span = document.createElement('span');
+                    span.textContent = number + ' ';
+                    binarySequenceContainer.appendChild(span);
+                });
+                propertyContainer.append('Вага Хемінгу ' + data.hg + '; T(очікуване) ' + data.T_e  + '; T(реальне) ' + data.T_r);
+
             })
             .catch(error => {
                 console.error('Помилка при отриманні результатів операцій з матрицею:', error);
@@ -90,9 +101,4 @@ function handlePolynomialOperations() {
 }
 
 
-const buildMatrixButton = document.getElementById('buildMatrixButton');
-buildMatrixButton.addEventListener('click', handlePolynomialOperations);
 
-const numberSelect = document.getElementById('numberSelect');
-const elementSelect = document.getElementById('elementSelect');
-numberSelect.addEventListener('change', handleDegreeChange);
