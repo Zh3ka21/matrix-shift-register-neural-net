@@ -110,6 +110,8 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2) {
 
                 const matrixContainerS = document.getElementById('matrix-container-S');
                 matrixContainerS.innerHTML = '';
+                const buttonContainerS = document.getElementById('button-container');
+                buttonContainerS.innerHTML = '';
                 const matrixTableS = generateMatrixHTML(data.listResult['matrixS'][currentMatrixIndex]);
                 matrixContainerS.appendChild(matrixTableS);
 
@@ -125,7 +127,7 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2) {
                         const matrixTableNext = generateMatrixHTML(data.listResult['matrixS'][currentMatrixIndex]);
                         matrixContainerS.appendChild(matrixTableNext);
                     });
-                    matrixContainerS.appendChild(nextMatrixButton);
+                    buttonContainerS.appendChild(nextMatrixButton);
                 }
             })
             .catch(error => {
