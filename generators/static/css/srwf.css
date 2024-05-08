@@ -43,7 +43,14 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: #f8f9fa;
+    background-color: #ffffff;
+}
+
+.container-header {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #000000;
 }
 
 .form-label {
@@ -82,5 +89,4 @@
 .btn-primary:hover {
     background-color: #0056b3;
 }
-
 
