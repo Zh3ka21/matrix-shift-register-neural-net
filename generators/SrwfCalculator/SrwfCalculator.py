@@ -11,8 +11,7 @@ class SrwfCalculator:
         return JsonResponse(list(polynomials), safe=False)
 
 
-    def calculate_srwf(self, polynomial_id, selected_number):
-        polynomial = Polynomial.objects.get(pk=polynomial_id)
+    def calculate_srwf(self, polynomial, selected_number):
         result = {}
         result['structure_matrix'], second_digit_binary= self.get_structure_matrix(polynomial)
         result['state'] = self.get_state(polynomial, selected_number, result['structure_matrix'])
@@ -84,6 +83,6 @@ class SrwfCalculator:
         binary_representation_copy.insert(0, 1)
         for i in range(len(binary_representation_copy)):
             if binary_representation_copy[i] == 1:
-                poly += f'x^{len(binary_representation_copy) - 1 - i}'
+                poly += f'x^{len(binary_representation_copy) - 1 - i} + '
 
-        return poly if poly else '0'
+        return poly[:-3] if poly else '0'
