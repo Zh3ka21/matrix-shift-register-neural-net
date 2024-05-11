@@ -1,144 +1,269 @@
-{% extends 'generators/base.html' %}
-{% load static %}
-{% block content %}
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <label for="numberSelectFirst" class="form-label"
-                >Оберіть ступінь полінома:</label>
-                <select class="form-select" id="numberSelectFirst">
-                    {% for degree in degrees %}
-                        <option value="{{ degree }}">{{ degree }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="elementSelectFirst" class="form-label">Оберіть поліном:</label>
-                <select class="form-select" id="elementSelectFirst" disabled>
-                    <option value="">Оберіть ступінь</option>
-                </select>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="numberSelectSecond" class="form-label"
-                >Оберіть ступінь полінома:</label>
-                <select class="form-select" id="numberSelectSecond">
-                    {% for degree in degrees %}
-                        <option value="{{ degree }}">{{ degree }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="elementSelectSecond" class="form-label">Оберіть поліном:</label>
-                <select class="form-select" id="elementSelectSecond" disabled>
-                    <option value="">Оберіть ступінь</option>
-                </select>
-            </div>
-        </div>
-        <!-- Кнопка для побудови матриці -->
-        <div class="mt-4">
-            <button id="buildMatrixButton" class="btn btn-primary container-button">
-                Розрахувати
-            </button>
-        </div>
-
-        <div class="container mt-4">
-            <h4 class="text-center mb-4">Поліном А</h4>
-            <div id="matrix-container-first" class="">
-                <!-- Початкова матриця буде додана тут -->
-            </div>
-        </div>
-
-        <div class="container mt-4">
-            <h4 class="text-center mb-4">Поліном В</h4>
-            <div id="matrix-container-second" class="">
-                <!-- Початкова матриця буде додана тут -->
-            </div>
-        </div>
-
-        <div class="container mt-4">
-            <h4 class="text-center mb-4">Матриця S</h4>
-            <div id="matrix-container-S" class="">
-                <!-- Початкова матриця буде додана тут -->
-            </div>
-            <div id="button-container" class="mt-4">
-                <!-- Початкова матриця буде додана тут -->
-            </div>
-        </div>
-
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <h4 class="text-center mb-4">Поліном A</h4>
-                    <div id="poly-container-first" class="container border p-4 bg-light">
-                        <!-- Поліном буде додано тут -->
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="text-center mb-4">Поліном B</h4>
-                    <div id="poly-container-second" class="container border p-4 bg-light">
-                        <!-- Поліном буде додано тут -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4 class="text-center mb-4">Періоди А та B</h4>
-                    <div id="property-container" class="container border p-4 bg-light">
-                        <!-- Властивості будуть додані тут -->
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <h4 class="text-center mb-4">Вага Хемінгу</h4>
-                    <div id="hg-container" class="container border p-4 bg-light">
-                        <!-- Поліном буде додано тут -->
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <h4 class="text-center mb-4">Період послідовності</h4>
-                    <div id="T-container" class="container border p-4 bg-light">
-                        <!-- Поліном буде додано тут -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col-md-6">
-                    <h4 class="text-center mb-4">Послідовність чисел</h4>
-                    <div
-                            id="sequence-container"
-                            class="container border p-4 bg-light scroll-x"
-                    >
-                        <!-- Послідовність чисел буде додана тут -->
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="text-center mb-4">Послідовність бінарних чисел</h4>
-                    <div
-                            id="binary-sequence-container"
-                            class="container border p-4 bg-light scroll-x">
-                        <!-- Послідовність бінарних чисел буде додана тут -->
-                    </div>
-                </div>
-            </div>
-        </div>
+{% extends 'generators/base.html' %} {% load static %} {% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <label for="numberSelectFirst" class="form-label"
+        >Оберіть ступінь полінома:</label
+      >
+      <select class="form-select" id="numberSelectFirst">
+        {% for degree in degrees %}
+        <option value="{{ degree }}">{{ degree }}</option>
+        {% endfor %}
+      </select>
     </div>
+    <div class="col-md-6">
+      <label for="elementSelectFirst" class="form-label"
+        >Оберіть поліном:</label
+      >
+      <select class="form-select" id="elementSelectFirst" disabled>
+        <option value="">Оберіть ступінь</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label for="numberSelectSecond" class="form-label"
+        >Оберіть ступінь полінома:</label
+      >
+      <select class="form-select" id="numberSelectSecond">
+        {% for degree in degrees %}
+        <option value="{{ degree }}">{{ degree }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="elementSelectSecond" class="form-label"
+        >Оберіть поліном:</label
+      >
+      <select class="form-select" id="elementSelectSecond" disabled>
+        <option value="">Оберіть ступінь</option>
+      </select>
+    </div>
+  </div>
+  <!-- Кнопка для побудови матриці -->
+  <div class="mt-4">
+    <button
+      id="buildMatrixButton"
+      class="btn btn-primary container-button"
+      style="display: block; margin: 0 auto"
+    >
+      Розрахувати
+    </button>
+  </div>
 
-    <script src="{% static 'js/msr.js' %}"></script>
+  <div class="container mt-4" style="display: none">
+    <h4 id="toggleVisible1" style="display: none" class="text-center mb-4">
+      Поліном А
+    </h4>
+    <div
+      id="matrix-container-first"
+      class="output-container"
+      style="display: none"
+    >
+      <!-- Початкова матриця буде додана тут -->
+    </div>
+  </div>
 
-    <script>
-        const numberSelectFirst = document.getElementById("numberSelectFirst");
-        const numberSelectSecond = document.getElementById("numberSelectSecond");
-        numberSelectFirst.addEventListener("change", () => handleDegreeChange('elementSelectFirst', document.getElementById("elementSelectFirst"), numberSelectFirst, 'initialStateSelectFirst'));
-        numberSelectSecond.addEventListener("change", () => handleDegreeChange('elementSelectSecond', document.getElementById("elementSelectSecond"), numberSelectSecond, 'initialStateSelectSecond'));
+  <div class="container mt-4" style="display: none">
+    <h4 id="toggleVisible2" style="display: none" class="text-center mb-4">
+      Поліном В
+    </h4>
+    <div
+      id="matrix-container-second"
+      class="output-container"
+      style="display: none"
+    >
+      <!-- Початкова матриця буде додана тут -->
+    </div>
+  </div>
 
-        const buildMatrixButton = document.getElementById("buildMatrixButton");
-        buildMatrixButton.addEventListener("click", () => handlePolynomialOperations('elementSelectFirst', 'elementSelectSecond'));
+  <div class="container mt-4" style="display: none">
+    <h4 id="toggleVisible3" style="display: none" class="text-center mb-4">
+      Матриця S
+    </h4>
+    <div id="matrix-container-S" class="output-container" style="display: none">
+      <!-- Початкова матриця буде додана тут -->
+    </div>
+    <div
+      id="button-container"
+      class="mt-4 output-container"
+      style="display: none"
+    >
+      <!-- Початкова матриця буде додана тут -->
+    </div>
+  </div>
 
-    </script>
+  <div class="container mt-4" style="display: none">
+    <div class="row">
+      <div class="col-md-6">
+        <h4 id="toggleVisible4" style="display: none" class="text-center mb-4">
+          Поліном A
+        </h4>
+        <div
+          id="poly-container-first"
+          class="container border p-4 bg-light output-container"
+          style="display: none"
+        >
+          <!-- Поліном буде додано тут -->
+        </div>
+      </div>
+      <div class="col-md-6" style="display: none">
+        <h4 id="toggleVisible5" style="display: none" class="text-center mb-4">
+          Поліном B
+        </h4>
+        <div
+          id="poly-container-second"
+          class="container border p-4 bg-light output-container"
+          style="display: none"
+        >
+          <!-- Поліном буде додано тут -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-4" style="display: none">
+    <div class="row">
+      <div class="col-md-4">
+        <h4 id="toggleVisible6" style="display: none" class="text-center mb-4">
+          Періоди А та B
+        </h4>
+        <div
+          id="property-container"
+          class="container border p-4 bg-light output-container"
+          style="display: none"
+        >
+          <!-- Властивості будуть додані тут -->
+        </div>
+      </div>
+      <div class="col-md-4" style="display: none">
+        <h4 id="toggleVisible7" style="display: none" class="text-center mb-4">
+          Вага Хемінгу
+        </h4>
+        <div
+          id="hg-container"
+          class="container border p-4 bg-light output-container"
+          style="display: none"
+        >
+          <!-- Поліном буде додано тут -->
+        </div>
+      </div>
+      <div class="col-md-4" style="display: none">
+        <h4 id="toggleVisible8" style="display: none" class="text-center mb-4">
+          Період послідовності
+        </h4>
+        <div
+          id="T-container"
+          class="container border p-4 bg-light output-container"
+          style="display: none"
+        >
+          <!-- Поліном буде додано тут -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-4" style="display: none">
+    <div class="row">
+      <div class="col-md-6">
+        <h4 id="toggleVisible9" style="display: none" class="text-center mb-4">
+          Послідовність чисел
+        </h4>
+        <div
+          id="sequence-container"
+          class="container border p-4 bg-light scroll-x output-container"
+          style="display: none"
+        >
+          <!-- Послідовність чисел буде додана тут -->
+        </div>
+      </div>
+      <div class="col-md-6" style="display: none">
+        <h4 id="toggleVisible10" style="display: none" class="text-center mb-4">
+          Послідовність бінарних чисел
+        </h4>
+        <div
+          id="binary-sequence-container"
+          class="container border p-4 bg-light scroll-x output-container"
+          style="display: none"
+        >
+          <!-- Послідовність бінарних чисел буде додана тут -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/msr.js' %}"></script>
+
+<script>
+  const numberSelectFirst = document.getElementById("numberSelectFirst");
+  const numberSelectSecond = document.getElementById("numberSelectSecond");
+  numberSelectFirst.addEventListener("change", () =>
+    handleDegreeChange(
+      "elementSelectFirst",
+      document.getElementById("elementSelectFirst"),
+      numberSelectFirst,
+      "initialStateSelectFirst"
+    )
+  );
+  numberSelectSecond.addEventListener("change", () =>
+    handleDegreeChange(
+      "elementSelectSecond",
+      document.getElementById("elementSelectSecond"),
+      numberSelectSecond,
+      "initialStateSelectSecond"
+    )
+  );
+
+  const buildMatrixButton = document.getElementById("buildMatrixButton");
+  buildMatrixButton.addEventListener("click", () =>
+    handlePolynomialOperations("elementSelectFirst", "elementSelectSecond")
+  );
+
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("In function");
+
+    const button = document.getElementById("buildMatrixButton");
+
+    button.addEventListener("click", function () {
+      outputContainers.forEach((container) => {
+        container.style.display = "block";
+      });
+    });
+
+    const outputContainers = document.querySelectorAll(".output-container");
+    const headings = document.querySelectorAll('[id^="toggleVisible"]');
+    const containers = document.querySelectorAll(".container");
+    const columns6 = document.querySelectorAll(".col-md-6");
+    const columns4 = document.querySelectorAll(".col-md-4");
+
+    console.log(button);
+    console.log(outputContainers);
+    console.log(headings);
+
+    button.addEventListener("click", function () {
+      // Display all elements when the button is clicked
+      outputContainers.forEach((container) => {
+        container.style.display = "block";
+      });
+      headings.forEach((heading) => {
+        heading.style.display = "block";
+      });
+
+      containers.forEach((container) => {
+        container.style.display = "block";
+      });
+
+      outputContainers.forEach((oc) => {
+        oc.style.display = "block";
+      });
+
+      columns6.forEach((cols) => {
+        cols.style.display = "block";
+      });
+
+      columns4.forEach((cols) => {
+        cols.style.display = "block";
+      });
+    });
+  });
+</script>
 {% endblock content %}
