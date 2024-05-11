@@ -1,8 +1,10 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render
 from .models import Polynomial
 from django.http import JsonResponse
 from .SrwfCalculator.SrwfCalculator import SrwfCalculator
 from .MsrCalculator.MsrCalculator import MsrCalculator
+from .utils import validation, get_polynomials
 
 def base(request):
     return render(request, 'generators/home.html')
@@ -16,7 +18,7 @@ def srwf(request):
     return render(request, 'generators/srwf.html', {'degrees': degrees})
 
 def get_polynomials_view(request):
-    return SrwfCalculator.get_polynomials(request)
+    return get_polynomials(request)
 
 def handle_matrix_operations_view(request):
     polynomial_id = request.GET.get('polynomial_id')
@@ -31,6 +33,17 @@ def handle_matrix_operations_msr_view(request):
     polynomialFirst = Polynomial.objects.get(pk=polynomial_idFirst)
     polynomial_idSecond = request.GET.get('polynomial_idSecond')
     polynomialSecond = Polynomial.objects.get(pk=polynomial_idSecond)
-    cal = MsrCalculator()
-    listResult = cal.calculate_msr(polynomialFirst, polynomialSecond)
-    return JsonResponse({'listResult': listResult})
+    degreeFirst = int(request.GET.get('degreeFirst'))
+    degreeSecond = int(request.GET.get('degreeSecond'))
+    try:
+        validate_result, error_message = validation(degreeFirst, polynomialFirst.first_number, degreeSecond,
+                                                    polynomialSecond.first_number)
+        if validate_result:
+            raise ValidationError(error_message)
+
+        cal = MsrCalculator()
+        listResult = cal.calculate_msr(polynomialFirst, polynomialSecond)
+        return JsonResponse({'listResult': listResult})
+    except ValidationError as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
