@@ -1,24 +1,19 @@
 from django.http import JsonResponse
 from ..models import Polynomial
-from .utils import find_gcd
+from ..utils import find_gcd
+
 
 class SrwfCalculator:
 
-    @staticmethod
-    def get_polynomials(request):
-        selected_degree = request.GET.get('degree')
-        polynomials = Polynomial.objects.filter(degree=selected_degree).values('id', 'first_number', 'second_number', 'letter')
-        return JsonResponse(list(polynomials), safe=False)
-
-
     def calculate_srwf(self, polynomial, selected_number):
         result = {}
-        result['structure_matrix'], second_digit_binary= self.get_structure_matrix(polynomial)
+        result['structure_matrix'], second_digit_binary = self.get_structure_matrix(polynomial)
         result['state'] = self.get_state(polynomial, selected_number, result['structure_matrix'])
         result['sequence'] = self.get_sequence(result['state'])
         result['binary_sequence'] = self.get_binary_sequence(result['sequence'])
         result['hg'], result['T_e'], result['T_r'] = self.get_property(polynomial, result['sequence'])
         result['poly'] = self.get_poly(second_digit_binary)
+        result['acf'] = self.get_acf(result['T_r'], result['binary_sequence'])
         return result
 
     @staticmethod
@@ -86,3 +81,14 @@ class SrwfCalculator:
                 poly += f'x^{len(binary_representation_copy) - 1 - i} + '
 
         return poly[:-3] if poly else '0'
+
+    @staticmethod
+    def get_acf(T, up_subsequence):
+        RCr = []
+        for tilda in range(T):
+            autocorr_sum = 0
+            for t in range(T - 1):
+                autocorr_sum += up_subsequence[t] * up_subsequence[(t + tilda) % (T - 1)]
+            RCr.append(autocorr_sum / (T))
+
+        return RCr

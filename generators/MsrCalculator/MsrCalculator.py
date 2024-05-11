@@ -1,12 +1,12 @@
 from django.http import JsonResponse
 from ..models import Polynomial
 import numpy as np
-from .utils import power
+from ..utils import power
 
 
 class MsrCalculator:
 
-    def calculate_msr(self, polynomialFirst, polynomialSecond):
+    def calculate_msr(self, polynomialFirst: Polynomial, polynomialSecond: Polynomial):
         listResult = {}
         resultFirst = {}
         resultSecond = {}
@@ -27,8 +27,8 @@ class MsrCalculator:
         i = 1
         j = 1
         r = 2
-        matrix, current_index, sequence, binary_sequence= self.get_S(r, rows, columns, matrix, current_index, resultFirst['structure_matrix'], resultSecond['structure_matrix'])
-
+        matrix, current_index, sequence, binary_sequence = self.get_S(r, rows, columns, matrix, current_index, resultFirst['structure_matrix'], resultSecond['structure_matrix'])
+        print("1233")
         listResult['matrixS'] = matrix
         listResult['sequence'] = sequence
         listResult['binary_sequence'] = binary_sequence
@@ -40,16 +40,20 @@ class MsrCalculator:
         listResult['T_r'] = len(sequence)
         listResult['hg_e'] = self.hamming_weight(columns, rows, r)
         listResult['hg_r'] = len([i for i in sequence if i == 1])
+        print("1233")
+        listResult['acf'] = self.get_acf(listResult['T_r'], listResult['binary_sequence'])
+        print("1233")
         return listResult
 
     @staticmethod
     def get_S(r, rows, columns, matrix, current_index, A, B):
-        binary_sequence = []
         listMatrix = []
         for i in range(0, r):
+            print("111")
+            print(matrix)
             matrix, current_index = MsrCalculator.add_one_to_diagonal(rows, columns, matrix, current_index)
         sequence = MsrCalculator.get_sequence(A, B, matrix, 1, 1, listMatrix)
-        binary_sequence.append(MsrCalculator.get_binary_sequence(sequence))
+        binary_sequence = MsrCalculator.get_binary_sequence(sequence)
         return listMatrix, current_index, sequence, binary_sequence
 
     @staticmethod
@@ -57,6 +61,7 @@ class MsrCalculator:
         limit = np.matrix(matrix.copy())
         subsequence = []
         while True:
+            print("saada")
             matrixR.append(matrix.tolist())
             matrix = ((np.matrix(A) * matrix) % 2 * np.matrix(B)) % 2
             subsequence.append(int(matrix[i, j]))
@@ -64,11 +69,11 @@ class MsrCalculator:
                 return subsequence
 
     @staticmethod
-    def get_binary_sequence(sub):
+    def get_binary_sequence(sub: list[int]):
         return [-1 if num == 1 else 1 for num in sub]
 
     @staticmethod
-    def add_one_to_diagonal(rows, columns, matrix, current_index):
+    def add_one_to_diagonal(rows: int, columns: int, matrix, current_index):
         min_dimension = min(rows, columns)
         if current_index < min_dimension:
             matrix[current_index, current_index] = 1
@@ -77,17 +82,17 @@ class MsrCalculator:
         return (matrix, current_index)
 
     @staticmethod
-    def hamming_weight(columns, rows, r):
+    def hamming_weight(columns: int, rows: int, r: int):
         return (2 ** r - 1) * (2 ** (columns + rows - r - 1))
 
     @staticmethod
-    def octal_to_binary(second_digit):
+    def octal_to_binary(second_digit: int):
         decimal_number = int(str(second_digit), 8)
         binary_number = bin(decimal_number)[2:]
         return [int(digit) for digit in binary_number]
 
     @staticmethod
-    def get_structure_matrix(boolean, binary_representation):
+    def get_structure_matrix(boolean: bool, binary_representation: list[int]):
         if boolean:
             binary_ = binary_representation[1:]
             n = len(binary_)
@@ -122,3 +127,15 @@ class MsrCalculator:
                 poly += f'x^{len(binary_representation_copy) - 1 - i} + '
 
         return poly[:-3] if poly else '0'
+
+    @staticmethod
+    def get_acf(T, up_subsequence):
+        RCr = []
+        for tilda in range(T):
+            print("1 "+ str(tilda) + "   " + str(T - 1))
+            autocorr_sum = 0
+            for t in range(T - 1):
+                autocorr_sum += up_subsequence[t] * up_subsequence[(t + tilda) % (T - 1)]
+            RCr.append(autocorr_sum / (T))
+
+        return RCr
