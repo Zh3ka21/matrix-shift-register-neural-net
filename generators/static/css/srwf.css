@@ -1,91 +1,98 @@
 .matrix-table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .matrix-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-.scroll-x {
-  overflow-x: auto;
-  white-space: nowrap;
-}
-#matrix-container {
-  max-height: 200px; /* Максимальна висота контейнера */
-  overflow-y: auto; /* Додавання вертикальної прокрутки при необхідності */
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
 }
 
-#result-container {
-  max-height: 200px; /* Максимальна висота контейнера результатів */
-  overflow-y: auto; /* Додавання вертикальної прокрутки при необхідності */
+.scroll-x {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#matrix-container, #matrix-container-first,
+#matrix-container-second, #result-container,
+#matrix-container-S {
+    max-height: 200px; /* Максимальна висота контейнера */
+    overflow-y: auto; /* Додавання вертикальної прокрутки при необхідності */
 }
 
 .matrix-table tr:nth-child(even) {
-  background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
 
 .matrix-table tr:hover {
-  background-color: #ddd;
+    background-color: #ddd;
 }
 
 .matrix-table td:first-child {
-  width: 30px; /* Змінюємо ширину стовпчика */
-  background-color: #f0f0f0; /* Задаємо колір фону */
-  color: #333; /* Задаємо колір тексту */
-  text-align: center; /* Вирівнюємо текст по центру */
-  font-weight: bold; /* Робимо текст жирним */
+    width: 30px; /* Змінюємо ширину стовпчика */
+    background-color: #f0f0f0; /* Задаємо колір фону */
+    color: #333; /* Задаємо колір тексту */
+    text-align: center; /* Вирівнюємо текст по центру */
+    font-weight: bold; /* Робимо текст жирним */
 }
 
 /* Основні стилі */
 .container {
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
 }
 
 .container-header {
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #000000;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #000000;
 }
 
 .form-label {
-  font-weight: bold;
-  color: #333;
+    font-weight: bold;
+    color: #333;
 }
 
 .form-select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #495057;
-  outline: none;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #495057;
+    outline: none;
 }
 
 /* Додаткові стилі для краси */
 .row {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .col-md-4 {
-  padding: 0 10px;
+    padding: 0 10px;
 }
 
 .btn-primary {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
+}
+
+.containerBody{
+    height: 300px;
+}
+.container1 {
+    max-whidth: 100px;
+    overflow-x: scroll;
 }
