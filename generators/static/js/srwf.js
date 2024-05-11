@@ -5,14 +5,11 @@ function handleDegreeChange() {
         fetch(`/get_polynomials_view/?degree=${selectedNumber}`)
             .then(response => response.json())
             .then(data => {
-                elementSelect.innerHTML = '';
-                data.forEach(polynomial => {
-                    const option = document.createElement('option');
-                    option.value = polynomial.id;
-                    option.textContent = `${polynomial.first_number} ${polynomial.second_number} ${polynomial.letter}`;
-                    elementSelect.appendChild(option);
-                });
-                elementSelect.disabled = false;
+                populateSelectOptions(data, "elementSelect", "id", [
+                    "first_number",
+                    "second_number",
+                    "letter",
+                ]);
                 // Оновлення третього селектора зі списком чисел
                 const thirdSelect = document.getElementById('initialStateSelect');
                 thirdSelect.innerHTML = '';
@@ -35,47 +32,18 @@ function handleDegreeChange() {
     }
 }
 
-// Універсальна функція для побудови таблиць
-function generateMatrixHTML(matrixData) {
-    const table = document.createElement('table');
-    table.classList.add('matrix-table');
-    const tableBody = document.createElement('tbody');
-    matrixData.forEach((row, rowIndex) => {
-        const tableRow = document.createElement('tr');
-        row.forEach((cell, cellIndex) => {
-            const tableCell = document.createElement('td');
-            tableCell.textContent = cell;
-            tableRow.appendChild(tableCell);
-        });
-        const indexCell = document.createElement('td');
-        indexCell.textContent = rowIndex + 1;
-        tableRow.insertBefore(indexCell, tableRow.firstChild);
-        tableBody.appendChild(tableRow);
-    });
-
-    table.appendChild(tableBody);
-    return table;
-}
-
-//функція для додавання до контейнера
-function appendListToContainer(list, container) {
-    list.forEach(number => {
-        const span = document.createElement('span');
-        span.textContent = number + ' ';
-        container.appendChild(span);
-    });
-}
-
 //функція для відображення елементів з сервера
 function handlePolynomialOperations() {
-    // зчитування елементів
     const selectedPolynomialId = elementSelect.value;
     const selectedNumber = initialStateSelect.value;
     if (selectedPolynomialId && selectedNumber) {
         fetch(`/handle_matrix_operations_view/?polynomial_id=${selectedPolynomialId}&select=${selectedNumber}`)// передача параметрів на сервер
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                const containerBody = document.querySelector('.containerBody');
+                const acfData = data.result['acf'];
+                createCharts(acfData, containerBody);
+
                 const matrixContainer = document.getElementById('matrix-container');
                 matrixContainer.innerHTML = '';
                 const resultContainer = document.getElementById('result-container');
