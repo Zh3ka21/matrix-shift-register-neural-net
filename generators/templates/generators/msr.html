@@ -4,8 +4,7 @@
         <div class="row">
             <div class="col-md-6">
                 <label for="numberSelectFirst" class="form-label"
-                >Оберіть ступінь полінома A:</label
-                >
+                >Оберіть ступінь полінома A:</label>
                 <select class="form-select" id="numberSelectFirst">
                     {% for degree in degrees %}
                         <option value="{{ degree }}">{{ degree }}</option>
@@ -14,8 +13,7 @@
             </div>
             <div class="col-md-6">
                 <label for="elementSelectFirst" class="form-label"
-                >Оберіть поліном:</label
-                >
+                >Оберіть поліном:</label>
                 <select class="form-select" id="elementSelectFirst">
                     <option value=""></option>
                 </select>
@@ -25,8 +23,7 @@
         <div class="row">
             <div class="col-md-6">
                 <label for="numberSelectSecond" class="form-label"
-                >Оберіть ступінь полінома B:</label
-                >
+                >Оберіть ступінь полінома B:</label>
                 <select class="form-select" id="numberSelectSecond">
                     {% for degree in degrees %}
                         <option value="{{ degree }}">{{ degree }}</option>
@@ -35,9 +32,33 @@
             </div>
             <div class="col-md-6">
                 <label for="elementSelectSecond" class="form-label"
-                >Оберіть поліном:</label
-                >
+                >Оберіть поліном:</label>
                 <select class="form-select" id="elementSelectSecond">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Селектори i, j, r -->
+        <div class="row">
+            <div class="col-md-4">
+                <label for="iSelect" class="form-label"
+                >i:</label>
+                <select class="form-select" id="iSelect">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="jSelect" class="form-label"
+                >j:</label>
+                <select class="form-select" id="jSelect">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="rSelect" class="form-label"
+                >r:</label>
+                <select class="form-select" id="rSelect">
                     <option value=""></option>
                 </select>
             </div>
@@ -47,8 +68,7 @@
             <button
                     id="buildMatrixButton"
                     class="btn btn-primary container-button"
-                    style="display: block; margin: 0 auto"
-            >
+                    style="display: block; margin: 0 auto">
                 Розрахувати
             </button>
         </div>
@@ -60,8 +80,7 @@
             <div
                     id="matrix-container-first"
                     class="output-container"
-                    style="display: none"
-            >
+                    style="display: none">
                 <!-- Початкова матриця буде додана тут -->
             </div>
         </div>
@@ -73,8 +92,7 @@
             <div
                     id="matrix-container-second"
                     class="output-container"
-                    style="display: none"
-            >
+                    style="display: none">
                 <!-- Початкова матриця буде додана тут -->
             </div>
         </div>
@@ -89,8 +107,7 @@
             <div
                     id="button-container"
                     class="mt-4 output-container"
-                    style="display: none"
-            >
+                    style="display: none">
                 <!-- Початкова матриця буде додана тут -->
             </div>
         </div>
@@ -104,8 +121,7 @@
                     <div
                             id="poly-container-first"
                             class="container border p-4 bg-light output-container"
-                            style="display: none"
-                    >
+                            style="display: none">
                         <!-- Поліном буде додано тут -->
                     </div>
                 </div>
@@ -116,8 +132,7 @@
                     <div
                             id="poly-container-second"
                             class="container border p-4 bg-light output-container"
-                            style="display: none"
-                    >
+                            style="display: none">
                         <!-- Поліном буде додано тут -->
                     </div>
                 </div>
@@ -133,8 +148,7 @@
                     <div
                             id="property-container"
                             class="container border p-4 bg-light output-container"
-                            style="display: none"
-                    >
+                            style="display: none">
                         <!-- Властивості будуть додані тут -->
                     </div>
                 </div>
@@ -145,8 +159,7 @@
                     <div
                             id="hg-container"
                             class="container border p-4 bg-light output-container"
-                            style="display: none"
-                    >
+                            style="display: none">
                         <!-- Поліном буде додано тут -->
                     </div>
                 </div>
@@ -157,8 +170,7 @@
                     <div
                             id="T-container"
                             class="container border p-4 bg-light output-container"
-                            style="display: none"
-                    >
+                            style="display: none">
                         <!-- Поліном буде додано тут -->
                     </div>
                 </div>
@@ -174,8 +186,7 @@
                     <div
                             id="sequence-container"
                             class="container border p-4 bg-light scroll-x output-container"
-                            style="display: none"
-                    >
+                            style="display: none">
                         <!-- Послідовність чисел буде додана тут -->
                     </div>
                 </div>
@@ -186,8 +197,7 @@
                     <div
                             id="binary-sequence-container"
                             class="container border p-4 bg-light scroll-x output-container"
-                            style="display: none"
-                    >
+                            style="display: none">
                         <!-- Послідовність бінарних чисел буде додана тут -->
                     </div>
                 </div>
@@ -196,7 +206,6 @@
         <!-- Контейнер ACF-->
         <div class="container mt-4 scroll-x" style="display: none">
             <div class="containerBody">
-
             </div>
         </div>
     </div>
@@ -207,16 +216,38 @@
     <script>
         const numberSelectFirst = document.getElementById("numberSelectFirst");
         const numberSelectSecond = document.getElementById("numberSelectSecond");
+        const iSelect = document.getElementById("iSelect");
+        const jSelect = document.getElementById("jSelect");
 
         handleDegreeChange('elementSelectFirst', 'numberSelectFirst');
         iventSelectSecond()
+        updateSelector(iSelect, numberSelectFirst.value);
+        updateSelector(jSelect, numberSelectSecond.value);
+        updateR(numberSelectFirst.value)
 
         numberSelectFirst.addEventListener("change", () => iventSelectSecond())
-        numberSelectFirst.addEventListener("change", () => handleDegreeChange('elementSelectFirst', 'numberSelectFirst'));
-        numberSelectSecond.addEventListener("change", () => handleDegreeChange('elementSelectSecond', 'numberSelectSecond'));
+        numberSelectFirst.addEventListener("change", () => {
+            iventSelectSecond();
+            handleDegreeChange('elementSelectFirst', 'numberSelectFirst');
+            updateSelector(iSelect, numberSelectFirst.value);
+            updateSelector(jSelect, numberSelectSecond.value);
+            updateR(numberSelectFirst.value)
+        });
+
+        numberSelectSecond.addEventListener("change", () => {
+            handleDegreeChange('elementSelectSecond', 'numberSelectSecond');
+            updateSelector(iSelect, numberSelectFirst.value);
+            updateSelector(jSelect, numberSelectSecond.value);
+        });
 
         const buildMatrixButton = document.getElementById("buildMatrixButton");
-        buildMatrixButton.addEventListener("click", () => handlePolynomialOperations('elementSelectFirst', 'elementSelectSecond', 'numberSelectFirst', 'numberSelectSecond'));
+        buildMatrixButton.addEventListener("click", () => handlePolynomialOperations('elementSelectFirst',
+            'elementSelectSecond',
+            'numberSelectFirst',
+            'numberSelectSecond',
+            'iSelect',
+            'jSelect',
+            'rSelect'));
         document.addEventListener("DOMContentLoaded", () => visualization());
     </script>
 {% endblock content %}

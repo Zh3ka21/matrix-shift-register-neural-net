@@ -35,6 +35,9 @@ def handle_matrix_operations_msr_view(request):
     polynomialSecond = Polynomial.objects.get(pk=polynomial_idSecond)
     degreeFirst = int(request.GET.get('degreeFirst'))
     degreeSecond = int(request.GET.get('degreeSecond'))
+    i = int(request.GET.get('i'))
+    j = int(request.GET.get('j'))
+    r = int(request.GET.get('r'))
     try:
         validate_result, error_message = validation(degreeFirst, polynomialFirst.first_number, degreeSecond,
                                                     polynomialSecond.first_number)
@@ -42,7 +45,7 @@ def handle_matrix_operations_msr_view(request):
             raise ValidationError(error_message)
 
         cal = MsrCalculator()
-        listResult = cal.calculate_msr(polynomialFirst, polynomialSecond)
+        listResult = cal.calculate_msr(polynomialFirst, polynomialSecond, i, j, r)
         return JsonResponse({'listResult': listResult})
     except ValidationError as e:
         return JsonResponse({'error': str(e)}, status=400)

@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from ..models import Polynomial
 import numpy as np
 from ..utils import power
@@ -6,11 +5,11 @@ from ..utils import power
 
 class MsrCalculator:
 
-    def calculate_msr(self, polynomialFirst: Polynomial, polynomialSecond: Polynomial):
+    def calculate_msr(self, polynomialFirst: Polynomial, polynomialSecond: Polynomial, i:int, j: int, r: int):
         listResult = {}
         resultFirst = {}
         resultSecond = {}
-
+        print(i, j)
         secondDigitBinaryFirst = self.octal_to_binary(polynomialFirst.second_number)
         resultFirst['structure_matrix'] = self.get_structure_matrix(True, secondDigitBinaryFirst)
         resultFirst['poly'] = self.get_poly(secondDigitBinaryFirst)
@@ -24,11 +23,10 @@ class MsrCalculator:
         matrix = np.matrix([[0] * columns for _ in range(rows)])
 
         current_index = 0
-        i = 1
-        j = 1
-        r = 2
-        matrix, current_index, sequence, binary_sequence = self.get_S(r, rows, columns, matrix, current_index, resultFirst['structure_matrix'], resultSecond['structure_matrix'])
-        print("1233")
+        matrix, current_index, sequence, binary_sequence = self.get_S(r, rows, columns, matrix,
+                                                                      current_index, resultFirst['structure_matrix'],
+                                                                      resultSecond['structure_matrix'], i, j)
+
         listResult['matrixS'] = matrix
         listResult['sequence'] = sequence
         listResult['binary_sequence'] = binary_sequence
@@ -40,19 +38,16 @@ class MsrCalculator:
         listResult['T_r'] = len(sequence)
         listResult['hg_e'] = self.hamming_weight(columns, rows, r)
         listResult['hg_r'] = len([i for i in sequence if i == 1])
-        print("1233")
         listResult['acf'] = self.get_acf(listResult['T_r'], listResult['binary_sequence'])
-        print("1233")
         return listResult
 
     @staticmethod
-    def get_S(r, rows, columns, matrix, current_index, A, B):
+    def get_S(r, rows, columns, matrix, current_index, A, B, index, jndex):
         listMatrix = []
         for i in range(0, r):
-            print("111")
-            print(matrix)
             matrix, current_index = MsrCalculator.add_one_to_diagonal(rows, columns, matrix, current_index)
-        sequence = MsrCalculator.get_sequence(A, B, matrix, 1, 1, listMatrix)
+        print(index, jndex)
+        sequence = MsrCalculator.get_sequence(A, B, matrix, index, jndex, listMatrix)
         binary_sequence = MsrCalculator.get_binary_sequence(sequence)
         return listMatrix, current_index, sequence, binary_sequence
 
@@ -61,7 +56,6 @@ class MsrCalculator:
         limit = np.matrix(matrix.copy())
         subsequence = []
         while True:
-            print("saada")
             matrixR.append(matrix.tolist())
             matrix = ((np.matrix(A) * matrix) % 2 * np.matrix(B)) % 2
             subsequence.append(int(matrix[i, j]))
@@ -132,7 +126,6 @@ class MsrCalculator:
     def get_acf(T, up_subsequence):
         RCr = []
         for tilda in range(T):
-            print("1 "+ str(tilda) + "   " + str(T - 1))
             autocorr_sum = 0
             for t in range(T - 1):
                 autocorr_sum += up_subsequence[t] * up_subsequence[(t + tilda) % (T - 1)]
