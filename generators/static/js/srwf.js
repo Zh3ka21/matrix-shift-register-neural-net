@@ -19,7 +19,6 @@ function handleDegreeChange() {
                     option.textContent = i;
                     thirdSelect.appendChild(option);
                 }
-                console.log(thirdSelect)
                 thirdSelect.disabled = false;
 
             })

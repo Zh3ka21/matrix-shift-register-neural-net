@@ -21,15 +21,25 @@ function handleDegreeChange(selectorId, numberSelectElement) {
     }
 }
 
-let currentMatrixIndex = 0;
 
-function handlePolynomialOperations(elementSelectId1, elementSelectId2, numberSelect1, numberSelect2) {
+function handlePolynomialOperations(elementSelectId1, elementSelectId2,
+                                    numberSelect1, numberSelect2,
+                                    iSelect, jSelect, rSelect) {
     const selectedPolynomialId1 = document.getElementById(elementSelectId1).value;
     const selectedPolynomialId2 = document.getElementById(elementSelectId2).value;
     const degree1 = document.getElementById(numberSelect1).value;
     const degree2 = document.getElementById(numberSelect2).value;
+    const i = document.getElementById(iSelect).value;
+    const j = document.getElementById(jSelect).value;
+    const r = document.getElementById(rSelect).value;
     if (selectedPolynomialId1 && selectedPolynomialId2 && degree1 && degree2) {
-        fetch(`/handle_matrix_operations_msr_view/?polynomial_idFirst=${selectedPolynomialId1}&polynomial_idSecond=${selectedPolynomialId2}&degreeFirst=${degree1}&degreeSecond=${degree2}`)
+        fetch(`/handle_matrix_operations_msr_view/?polynomial_idFirst=${selectedPolynomialId1}
+                                                        &polynomial_idSecond=${selectedPolynomialId2}
+                                                        &degreeFirst=${degree1}
+                                                        &degreeSecond=${degree2}
+                                                        &i=${i}
+                                                        &j=${j}
+                                                        &r=${r}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error vlidation');
@@ -40,7 +50,7 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2, numberSe
                 const containerBody = document.querySelector('.containerBody');
                 const acfData = data.listResult['acf'];
                 createCharts(acfData, containerBody);
-
+                let currentMatrixIndex = 0;
                 // Очистка контейнерів перед оновленням даних
                 document.getElementById("matrix-container-first").innerHTML = "";
                 document.getElementById("matrix-container-second").innerHTML = "";
@@ -122,47 +132,23 @@ function iventSelectSecond() {
     handleDegreeChange('elementSelectSecond', 'numberSelectSecond');
 }
 
-//функція відображення кожного елементу на сторінці
-function display(outputContainers) {
-
-    const headings = document.querySelectorAll('[id^="toggleVisible"]');
-    const containers = document.querySelectorAll(".container");
-    const columns6 = document.querySelectorAll(".col-md-6");
-    const columns4 = document.querySelectorAll(".col-md-4");
-    // Display all elements when the button is clicked
-    outputContainers.forEach((container) => {
-        container.style.display = "block";
-    });
-    headings.forEach((heading) => {
-        heading.style.display = "block";
-    });
-
-    containers.forEach((container) => {
-        container.style.display = "block";
-    });
-
-    outputContainers.forEach((oc) => {
-        oc.style.display = "block";
-    });
-
-    columns6.forEach((cols) => {
-        cols.style.display = "block";
-    });
-
-    columns4.forEach((cols) => {
-        cols.style.display = "block";
-    });
+function updateSelector(selector, maxDegree) {
+    selector.innerHTML = '';
+    for (let i = 0; i < maxDegree; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        selector.appendChild(option);
+    }
 }
 
-//функція відображення
-function visualization() {
-    const button = document.getElementById("buildMatrixButton");
-    const outputContainers = document.querySelectorAll(".output-container");
-    button.addEventListener("click", function () {
-        outputContainers.forEach((container) => {
-            container.style.display = "block";
-        });
-    });
-
-    button.addEventListener("click", () => display(outputContainers));
+function updateR(maxDegree) {
+    const selector = document.getElementById("rSelect")
+    selector.innerHTML = '';
+    for (let i = 1; i <= maxDegree; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        selector.appendChild(option);
+    }
 }
