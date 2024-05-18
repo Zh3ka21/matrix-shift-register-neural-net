@@ -34,25 +34,26 @@
 
         <!-- Кнопка для побудови матриці -->
         <div class="mt-4">
-            <button id="buildMatrixButton" class="btn btn-primary container-button">
+            <button id="buildMatrixButton" class="btn btn-primary container-button"
+                    style="display: block; margin: 0 auto">
                 Розрахувати
             </button>
         </div>
         <!-- Контейнер для початкової матриці -->
-        <div class="container mt-4">
+        <div class="container mt-4" style="display: none">
             <h4 class="text-center mb-4">Поліном</h4>
             <div id="matrix-container" class="">
                 <!-- Початкова матриця буде додана тут -->
             </div>
         </div>
         <!-- Контейнер для станів матриці -->
-        <div class="container mt-4">
+        <div class="container mt-4" style="display: none">
             <div id="result-container" class="">
                 <!-- Результати множення будуть додані тут -->
             </div>
         </div>
         <!-- Контейнер для властивостей -->
-        <div class="container mt-4">
+        <div class="container mt-4" style="display: none">
             <div class="row">
                 <div class="col-md-6">
                     <h4 class="text-center mb-4">Властивості</h4>
@@ -69,7 +70,7 @@
             </div>
         </div>
         <!-- Контейнер для послідовностей -->
-        <div class="container mt-4">
+        <div class="container mt-4" style="display: none">
             <div class="row">
                 <div class="col-md-6">
                     <h4 class="text-center mb-4">Послідовність чисел</h4>
@@ -91,7 +92,7 @@
             </div>
         </div>
         <!-- Контейнер для ACF -->
-        <div class="container mt-4 scroll-x">
+        <div class="container mt-4 scroll-x" style="display: none">
             <div class="containerBody">
             </div>
         </div>
@@ -100,10 +101,12 @@
     <script src="{% static 'js/srwf.js' %}"></script>
     <script src="{% static 'js/utils.js' %}"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", () => visualization());
         const numberSelect = document.getElementById("numberSelect");
         const buildMatrixButton = document.getElementById("buildMatrixButton");
         handleDegreeChange()
         buildMatrixButton.addEventListener("click", handlePolynomialOperations);
         numberSelect.addEventListener("change", handleDegreeChange);
+
     </script>
 {% endblock content %}
