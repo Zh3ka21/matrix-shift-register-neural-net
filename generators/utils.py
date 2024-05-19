@@ -3,6 +3,8 @@ from django.http import JsonResponse
 def power(n):
     return 2 ** n - 1
 
+def lcm(a, b):
+    return abs(a * b) // find_gcd(a, b)
 
 def find_gcd(a, b):
     while b:
@@ -11,10 +13,6 @@ def find_gcd(a, b):
 
 
 def validation(degreeA, first_digitA, degreeB, first_digitB):
-    denominator = find_gcd(power(degreeA), power(degreeB))
-    if denominator != 1:
-        print(" 1 " + str(denominator))
-        return True, "Degrees error"
 
     numerator = power(degreeA)
     denominator = find_gcd(numerator, first_digitA)

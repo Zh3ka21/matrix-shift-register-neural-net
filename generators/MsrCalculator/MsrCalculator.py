@@ -1,6 +1,6 @@
 from ..models import Polynomial
 import numpy as np
-from ..utils import power
+from ..utils import power, lcm
 
 
 class MsrCalculator:
@@ -34,7 +34,7 @@ class MsrCalculator:
         listResult['resultSecond'] = resultSecond
         resultFirst['T'] = power(rows)
         resultSecond['T'] = power(columns)
-        listResult['T_e'] = resultFirst['T'] * resultSecond['T']
+        listResult['T_e'] = lcm(resultFirst['T'], resultSecond['T'])
         listResult['T_r'] = len(sequence)
         listResult['hg_e'] = self.hamming_weight(columns, rows, r)
         listResult['hg_r'] = len([i for i in sequence if i == 1])

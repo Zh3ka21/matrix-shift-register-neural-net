@@ -123,7 +123,7 @@ function iventSelectSecond() {
     const selectedDegreeFirst = parseInt(numberSelectFirst.value);
 
     elementSelect.innerHTML = '';
-    for (let i = selectedDegreeFirst + 1; i < 14; i++) {
+    for (let i = selectedDegreeFirst; i < 14; i++) {
         const option = document.createElement('option');
         option.value = `${i}`;
         option.textContent = i;
