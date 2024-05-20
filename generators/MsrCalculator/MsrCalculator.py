@@ -57,8 +57,8 @@ class MsrCalculator:
         subsequence = []
         while True:
             matrixR.append(matrix.tolist())
-            matrix = ((np.matrix(A) * matrix) % 2 * np.matrix(B)) % 2
             subsequence.append(int(matrix[i, j]))
+            matrix = ((np.matrix(A) * matrix) % 2 * np.matrix(B)) % 2
             if np.all(matrix == limit):
                 return subsequence
 

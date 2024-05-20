@@ -43,6 +43,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .container-header {
@@ -65,6 +66,14 @@
     background-color: #fff;
     color: #495057;
     outline: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-select:hover,
+.form-select:focus {
+    border-color: #9743ff;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.25);
 }
 
 /* Додаткові стилі для краси */
@@ -77,22 +86,26 @@
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background-color: #9743ff;
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
+
 
 .btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #4d00ae;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.containerBody{
+.containerBody {
     height: 300px;
 }
+
 .container1 {
-    max-whidth: 100px;
+    max-width: 100px;
     overflow-x: scroll;
 }
