@@ -74,40 +74,40 @@
         </div>
         <!-- Контейнер початкової матриці -->
         <div class="container mt-4" style="display: none">
-            <h4 id="toggleVisible1" style="display: none" class="text-center mb-4">
+            <h4 id="toggleVisible1" style="" class="text-center mb-4">
                 Поліном А
             </h4>
             <div
                     id="matrix-container-first"
                     class="output-container"
-                    style="display: none">
+                    style="">
                 <!-- Початкова матриця буде додана тут -->
             </div>
         </div>
         <!-- Контейнер початкової матриці А -->
         <div class="container mt-4" style="display: none">
-            <h4 id="toggleVisible2" style="display: none" class="text-center mb-4">
+            <h4 id="toggleVisible2" style="" class="text-center mb-4">
                 Поліном В
             </h4>
             <div
                     id="matrix-container-second"
                     class="output-container"
-                    style="display: none">
+                    style="">
                 <!-- Початкова матриця буде додана тут -->
             </div>
         </div>
         <!-- Контейнер початкової матриці В-->
         <div class="container mt-4" style="display: none">
-            <h4 id="toggleVisible3" style="display: none" class="text-center mb-4">
+            <h4 id="toggleVisible3" style="" class="text-center mb-4">
                 Матриця S
             </h4>
-            <div id="matrix-container-S" class="output-container" style="display: none">
+            <div id="matrix-container-S" class="output-container" style="">
                 <!-- Початкова матриця буде додана тут -->
             </div>
             <div
                     id="button-container"
                     class="mt-4 output-container"
-                    style="display: none">
+                    style="">
                 <!-- Початкова матриця буде додана тут -->
             </div>
         </div>
@@ -115,24 +115,24 @@
         <div class="container mt-4" style="display: none">
             <div class="row">
                 <div class="col-md-6">
-                    <h4 id="toggleVisible4" style="display: none" class="text-center mb-4">
+                    <h4 id="toggleVisible4" style="" class="text-center mb-4">
                         Поліном A
                     </h4>
                     <div
                             id="poly-container-first"
                             class="container border p-4 bg-light output-container"
-                            style="display: none">
+                            style="">
                         <!-- Поліном буде додано тут -->
                     </div>
                 </div>
-                <div class="col-md-6" style="display: none">
-                    <h4 id="toggleVisible5" style="display: none" class="text-center mb-4">
+                <div class="col-md-6" style="">
+                    <h4 id="toggleVisible5" style="" class="text-center mb-4">
                         Поліном B
                     </h4>
                     <div
                             id="poly-container-second"
                             class="container border p-4 bg-light output-container"
-                            style="display: none">
+                            style="">
                         <!-- Поліном буде додано тут -->
                     </div>
                 </div>
@@ -142,7 +142,7 @@
         <div class="container mt-4" style="display: none">
             <div class="row">
                 <div class="col-md-4">
-                    <h4 id="toggleVisible6" style="display: none" class="text-center mb-4">
+                    <h4 id="toggleVisible6" style="" class="text-center mb-4">
                         Періоди А та B
                     </h4>
                     <div
@@ -152,8 +152,8 @@
                         <!-- Властивості будуть додані тут -->
                     </div>
                 </div>
-                <div class="col-md-4" style="display: none">
-                    <h4 id="toggleVisible7" style="display: none" class="text-center mb-4">
+                <div class="col-md-4" style="">
+                    <h4 id="toggleVisible7" style="" class="text-center mb-4">
                         Вага Хемінгу
                     </h4>
                     <div
@@ -163,8 +163,8 @@
                         <!-- Поліном буде додано тут -->
                     </div>
                 </div>
-                <div class="col-md-4" style="display: none">
-                    <h4 id="toggleVisible8" style="display: none" class="text-center mb-4">
+                <div class="col-md-4" style="">
+                    <h4 id="toggleVisible8" style="" class="text-center mb-4">
                         Період послідовності
                     </h4>
                     <div
@@ -180,24 +180,24 @@
         <div class="container mt-4" style="display: none">
             <div class="row">
                 <div class="col-md-6">
-                    <h4 id="toggleVisible9" style="display: none" class="text-center mb-4">
+                    <h4 id="toggleVisible9" style="" class="text-center mb-4">
                         Послідовність чисел
                     </h4>
                     <div
                             id="sequence-container"
                             class="container border p-4 bg-light scroll-x output-container"
-                            style="display: none">
+                            style="">
                         <!-- Послідовність чисел буде додана тут -->
                     </div>
                 </div>
-                <div class="col-md-6" style="display: none">
-                    <h4 id="toggleVisible10" style="display: none" class="text-center mb-4">
+                <div class="col-md-6" style="">
+                    <h4 id="toggleVisible10" style="" class="text-center mb-4">
                         Послідовність бінарних чисел
                     </h4>
                     <div
                             id="binary-sequence-container"
                             class="container border p-4 bg-light scroll-x output-container"
-                            style="display: none">
+                            style="">
                         <!-- Послідовність бінарних чисел буде додана тут -->
                     </div>
                 </div>
@@ -220,14 +220,12 @@
         const jSelect = document.getElementById("jSelect");
 
         handleDegreeChange('elementSelectFirst', 'numberSelectFirst');
-        iventSelectSecond()
+        handleDegreeChange('elementSelectSecond', 'numberSelectSecond');
         updateSelector(iSelect, numberSelectFirst.value);
         updateSelector(jSelect, numberSelectSecond.value);
         updateR(numberSelectFirst.value)
 
-        numberSelectFirst.addEventListener("change", () => iventSelectSecond())
         numberSelectFirst.addEventListener("change", () => {
-            iventSelectSecond();
             handleDegreeChange('elementSelectFirst', 'numberSelectFirst');
             updateSelector(iSelect, numberSelectFirst.value);
             updateSelector(jSelect, numberSelectSecond.value);

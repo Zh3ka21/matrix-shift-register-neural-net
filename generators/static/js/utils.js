@@ -89,46 +89,14 @@ function createCharts(data, containerSelector, chunkSize = 2000, maxDataLength =
 }
 
 //функція відображення кожного елементу на сторінці
-function display(outputContainers) {
-
-    const headings = document.querySelectorAll('[id^="toggleVisible"]');
+function display() {
     const containers = document.querySelectorAll(".container");
-    const columns6 = document.querySelectorAll(".col-md-6");
-    const columns4 = document.querySelectorAll(".col-md-4");
-    // Display all elements when the button is clicked
-    outputContainers.forEach((container) => {
-        container.style.display = "block";
-    });
-    headings.forEach((heading) => {
-        heading.style.display = "block";
-    });
-
     containers.forEach((container) => {
         container.style.display = "block";
     });
-
-    outputContainers.forEach((oc) => {
-        oc.style.display = "block";
-    });
-
-    columns6.forEach((cols) => {
-        cols.style.display = "block";
-    });
-
-    columns4.forEach((cols) => {
-        cols.style.display = "block";
-    });
 }
 
-//функція відображення
 function visualization() {
     const button = document.getElementById("buildMatrixButton");
-    const outputContainers = document.querySelectorAll(".output-container");
-    button.addEventListener("click", function () {
-        outputContainers.forEach((container) => {
-            container.style.display = "block";
-        });
-    });
-
-    button.addEventListener("click", () => display(outputContainers));
+    button.addEventListener("click", () => display());
 }

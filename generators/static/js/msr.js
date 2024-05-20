@@ -69,7 +69,7 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2,
                 document.getElementById("matrix-container-second").appendChild(generateMatrixHTML(data.listResult["resultSecond"].structure_matrix));
 
                 document.getElementById("property-container").innerText = "T(A) " +
-                    data.listResult["resultSecond"].T +
+                    data.listResult["resultFirst"].T +
                     "; T(B) " +
                     data.listResult["resultSecond"].T;
                 document.getElementById("hg-container").innerText = "Вага(очікуване) " +

@@ -9,7 +9,6 @@ class MsrCalculator:
         listResult = {}
         resultFirst = {}
         resultSecond = {}
-        print(i, j)
         secondDigitBinaryFirst = self.octal_to_binary(polynomialFirst.second_number)
         resultFirst['structure_matrix'] = self.get_structure_matrix(True, secondDigitBinaryFirst)
         resultFirst['poly'] = self.get_poly(secondDigitBinaryFirst)
@@ -17,7 +16,6 @@ class MsrCalculator:
         secondDigitBinarySecond = self.octal_to_binary(polynomialSecond.second_number)
         resultSecond['structure_matrix'] = self.get_structure_matrix(False, secondDigitBinarySecond)
         resultSecond['poly'] = self.get_poly(secondDigitBinarySecond)
-
         rows = len(resultFirst['structure_matrix'])
         columns = len(resultSecond['structure_matrix'])
         matrix = np.matrix([[0] * columns for _ in range(rows)])
@@ -46,7 +44,6 @@ class MsrCalculator:
         listMatrix = []
         for i in range(0, r):
             matrix, current_index = MsrCalculator.add_one_to_diagonal(rows, columns, matrix, current_index)
-        print(index, jndex)
         sequence = MsrCalculator.get_sequence(A, B, matrix, index, jndex, listMatrix)
         binary_sequence = MsrCalculator.get_binary_sequence(sequence)
         return listMatrix, current_index, sequence, binary_sequence
