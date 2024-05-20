@@ -72,10 +72,12 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2,
                     data.listResult["resultFirst"].T +
                     "; T(B) " +
                     data.listResult["resultSecond"].T;
-                document.getElementById("hg-container").innerText = "Вага(очікуване) " +
-                    data.listResult["hg_e"] +
-                    "; Вага(реальне) " +
-                    data.listResult["hg_r"];
+                let str = "Вага(очікуване) " + data.listResult["hg_e"] +"; Вага(реальне) " + data.listResult["hg_r"];
+                if (degree1 == degree2){
+                    str = "Вага(реальне) " + data.listResult["hg_r"];
+                }
+
+                document.getElementById("hg-container").innerText = str;
                 document.getElementById("T-container").innerText = "T(очікуване) " +
                     data.listResult["T_e"] +
                     "; T(реальне) " +
