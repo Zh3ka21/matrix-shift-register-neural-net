@@ -4,6 +4,7 @@ from .models import Polynomial
 from django.http import JsonResponse
 from .SrwfCalculator.SrwfCalculator import SrwfCalculator
 from .MsrCalculator.MsrCalculator import MsrCalculator
+from .SrwfCalculator.PRNG import RandomNumberModel
 from .utils import validation, get_polynomials
 
 def base(request):
@@ -26,6 +27,10 @@ def handle_matrix_operations_view(request):
     selected_number = int(request.GET.get('select'))
     cal = SrwfCalculator()
     result = cal.calculate_srwf(polynomial, selected_number)
+    rnm = RandomNumberModel()
+    rnm.load_model()  # Load the model
+    r_n_lst = rnm.generate_random_numbers(n = 10)
+    result["rlst"] = r_n_lst
     return JsonResponse({'result': result})
 
 def handle_matrix_operations_msr_view(request):
