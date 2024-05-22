@@ -43,6 +43,11 @@ function handlePolynomialOperations() {
                 const acfData = data.result['acf'];
                 createCharts(acfData, containerBody);
 
+                const container = document.getElementById('PRNG');
+                const randomNumberContainer = document.getElementById('randomNumberContainer');
+                const numbers = data.result.rlst;
+                console.log(numbers);
+                
                 const matrixContainer = document.getElementById('matrix-container');
                 matrixContainer.innerHTML = '';
                 const resultContainer = document.getElementById('result-container');
@@ -67,6 +72,18 @@ function handlePolynomialOperations() {
 
                 propertyContainer.append('Вага Хемінгу ' + data.result['hg'] + '; T(очікуване) ' + data.result['T_e'] + '; T(реальне) ' + data.result['T_r']);
                 polyContainer.append(data.result['poly'])
+
+                // Creating p per each number
+                // Concatenate the numbers into a single string
+                const concatenatedNumbers = numbers.join(' ');
+
+                // Create a single text node or span element
+                const numberElement = document.createElement('span');
+                numberElement.textContent = concatenatedNumbers;
+                container.appendChild(numberElement);
+
+                // Show the container
+                randomNumberContainer.style.display = 'block';
             })
             .catch(error => {
                 console.error('Помилка при отриманні результатів операцій з матрицею:', error);
