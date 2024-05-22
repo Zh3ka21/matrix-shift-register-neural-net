@@ -1,112 +1,124 @@
 {% extends 'generators/base.html' %} {% load static %} {% block content %}
-    <div class="container mt-5">
-        <!-- Селектор поліному -->
-        <div class="row">
-            <div class="col-md-4">
-                <label for="numberSelect" class="form-label"
-                >Оберіть ступінь полінома:</label>
-                <select class="form-select" id="numberSelect">
-                    {% for degree in degrees %}
-                        <option value="{{ degree }}">{{ degree }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="elementSelect" class="form-label">Оберіть поліном:</label>
-                <select class="form-select" id="elementSelect" disabled>
-                    <option value="">Оберіть ступінь</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="initialStateSelect" class="form-label"
-                >Оберіть числа для початкового стану:</label
-                >
-                <select
-                        class="form-select"
-                        id="initialStateSelect"
-                        name="initialStateSelect"
-                        disabled
-                >
-                    <option value="">Оберіть ступінь</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Кнопка для побудови матриці -->
-        <div class="mt-4">
-            <button id="buildMatrixButton" class="btn btn-primary container-button"
-                    style="display: block; margin: 0 auto">
-                Розрахувати
-            </button>
-        </div>
-        <!-- Контейнер для початкової матриці -->
-        <div class="container mt-4" style="display: none">
-            <h4 class="text-center mb-4">Поліном</h4>
-            <div id="matrix-container" class="">
-                <!-- Початкова матриця буде додана тут -->
-            </div>
-        </div>
-        <!-- Контейнер для станів матриці -->
-        <div class="container mt-4" style="display: none">
-            <div id="result-container" class="">
-                <!-- Результати множення будуть додані тут -->
-            </div>
-        </div>
-        <!-- Контейнер для властивостей -->
-        <div class="container mt-4" style="display: none">
-            <div class="row">
-                <div class="col-md-6">
-                    <h4 class="text-center mb-4">Властивості</h4>
-                    <div id="property-container" class="container border p-4 bg-light">
-                        <!-- Властивості будуть додані тут -->
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="text-center mb-4">Поліном</h4>
-                    <div id="poly-container" class="container border p-4 bg-light">
-                        <!-- Поліном буде додано тут -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Контейнер для послідовностей -->
-        <div class="container mt-4" style="display: none">
-            <div class="row">
-                <div class="col-md-6">
-                    <h4 class="text-center mb-4">Послідовність чисел</h4>
-                    <div
-                            id="sequence-container"
-                            class="container border p-4 bg-light scroll-x"
-                    >
-                        <!-- Послідовність чисел буде додана тут -->
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="text-center mb-4">Послідовність бінарних чисел</h4>
-                    <div
-                            id="binary-sequence-container"
-                            class="container border p-4 bg-light scroll-x">
-                        <!-- Послідовність бінарних чисел буде додана тут -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Контейнер для ACF -->
-        <div class="container mt-4 scroll-x" style="display: none">
-            <div class="containerBody">
-            </div>
-        </div>
+<div class="container mt-5">
+  <!-- Селектор поліному -->
+  <div class="row">
+    <div class="col-md-4">
+      <label for="numberSelect" class="form-label"
+        >Оберіть ступінь полінома:</label
+      >
+      <select class="form-select" id="numberSelect">
+        {% for degree in degrees %}
+        <option value="{{ degree }}">{{ degree }}</option>
+        {% endfor %}
+      </select>
     </div>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{% static 'js/srwf.js' %}"></script>
-    <script src="{% static 'js/utils.js' %}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => visualization());
-        const numberSelect = document.getElementById("numberSelect");
-        const buildMatrixButton = document.getElementById("buildMatrixButton");
-        handleDegreeChange()
-        buildMatrixButton.addEventListener("click", handlePolynomialOperations);
-        numberSelect.addEventListener("change", handleDegreeChange);
+    <div class="col-md-4">
+      <label for="elementSelect" class="form-label">Оберіть поліном:</label>
+      <select class="form-select" id="elementSelect" disabled>
+        <option value="">Оберіть ступінь</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="initialStateSelect" class="form-label"
+        >Оберіть числа для початкового стану:</label
+      >
+      <select
+        class="form-select"
+        id="initialStateSelect"
+        name="initialStateSelect"
+        disabled
+      >
+        <option value="">Оберіть ступінь</option>
+      </select>
+    </div>
+  </div>
 
-    </script>
+  <!-- Кнопка для побудови матриці -->
+  <div class="mt-4">
+    <button
+      id="buildMatrixButton"
+      class="btn btn-primary container-button"
+      style="display: block; margin: 0 auto"
+    >
+      Розрахувати
+    </button>
+  </div>
+  <!-- Контейнер для початкової матриці -->
+  <div class="container mt-4" style="display: none">
+    <h4 class="text-center mb-4">Поліном</h4>
+    <div id="matrix-container" class="">
+      <!-- Початкова матриця буде додана тут -->
+    </div>
+  </div>
+  <!-- Контейнер для станів матриці -->
+  <div class="container mt-4" style="display: none">
+    <div id="result-container" class="">
+      <!-- Результати множення будуть додані тут -->
+    </div>
+  </div>
+  <!-- Контейнер для властивостей -->
+  <div class="container mt-4" style="display: none">
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-center mb-4">Властивості</h4>
+        <div id="property-container" class="container border p-4 bg-light">
+          <!-- Властивості будуть додані тут -->
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h4 class="text-center mb-4">Поліном</h4>
+        <div id="poly-container" class="container border p-4 bg-light">
+          <!-- Поліном буде додано тут -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Контейнер для послідовностей -->
+  <div class="container mt-4" style="display: none">
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-center mb-4">Послідовність чисел</h4>
+        <div
+          id="sequence-container"
+          class="container border p-4 bg-light scroll-x"
+        >
+          <!-- Послідовність чисел буде додана тут -->
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h4 class="text-center mb-4">Послідовність бінарних чисел</h4>
+        <div
+          id="binary-sequence-container"
+          class="container border p-4 bg-light scroll-x"
+        >
+          <!-- Послідовність бінарних чисел буде додана тут -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-4" style="display: none">
+    <h4 class="text-center mb-4">Псевдовипадкова послідовність чисел</h4>
+    <div class="container border p-4 bg-light scroll-x" id="PRNG">
+      <!-- Псевдовипадкова послідовність буде додана тут -->
+    </div>
+  </div>
+  <!-- Контейнер для ACF -->
+  <div class="container mt-4 scroll-x" style="display: none">
+    <div class="containerBody"></div>
+  </div>
+</div>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/chart.js"
+></script>
+<script src="{% static 'js/srwf.js' %}"></script>
+<script src="{% static 'js/utils.js' %}"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => visualization());
+  const numberSelect = document.getElementById("numberSelect");
+  const buildMatrixButton = document.getElementById("buildMatrixButton");
+  handleDegreeChange();
+  buildMatrixButton.addEventListener("click", handlePolynomialOperations);
+  numberSelect.addEventListener("change", handleDegreeChange);
+</script>
 {% endblock content %}
