@@ -100,3 +100,25 @@ function visualization() {
     const button = document.getElementById("buildMatrixButton");
     button.addEventListener("click", () => display());
 }
+
+function showError(errorMessage) {
+// Проверяем, если сообщение об ошибке является массивом
+    if (Array.isArray(errorMessage)) {
+        errorMessage = errorMessage.join(''); // Соединяем элементы массива в одну строку
+    }
+
+    // Убираем квадратные скобки, если они есть
+    if (errorMessage.startsWith('[') && errorMessage.endsWith(']')) {
+        errorMessage = errorMessage.substring(1, errorMessage.length - 1);
+    }
+
+    let errorModal = document.getElementById('errorModal');
+    let errorText = document.getElementById('errorText');
+    errorText.innerText = errorMessage;
+    errorModal.style.display = 'flex';
+}
+
+function closeErrorModal() {
+    let errorModal = document.getElementById('errorModal');
+    errorModal.style.display = 'none';
+}

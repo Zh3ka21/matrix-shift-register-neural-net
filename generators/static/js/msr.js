@@ -40,13 +40,18 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2,
                                                         &i=${i}
                                                         &j=${j}
                                                         &r=${r}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error vlidation');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then((data) => {
+                if (data.error) {
+                    console.log(data.error);
+                    showError(data.error);
+                    return;
+                } else {
+                    // Обрабатываем успешный ответ
+                    console.log(data.listResult);
+                    display();
+                }
+
                 const containerBody = document.querySelector('.containerBody');
                 const acfData = data.listResult['acf'];
                 createCharts(acfData, containerBody);
@@ -72,8 +77,8 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2,
                     data.listResult["resultFirst"].T +
                     "; T(B) " +
                     data.listResult["resultSecond"].T;
-                let str = "Вага(очікуване) " + data.listResult["hg_e"] +"; Вага(реальне) " + data.listResult["hg_r"];
-                if (degree1 == degree2){
+                let str = "Вага(очікуване) " + data.listResult["hg_e"] + "; Вага(реальне) " + data.listResult["hg_r"];
+                if (degree1 == degree2) {
                     str = "Вага(реальне) " + data.listResult["hg_r"];
                 }
 
@@ -113,9 +118,7 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2,
                     buttonContainerS.appendChild(nextMatrixButton);
                 }
             })
-            .catch(error => {
-                alert('Помилка: ' + error.message);
-            });
+            .catch(error => console.error('Error:', error));
     }
 }
 
@@ -146,6 +149,7 @@ function updateSelector(selector, maxDegree) {
 
 function updateR(maxDegree) {
     const selector = document.getElementById("rSelect")
+
     selector.innerHTML = '';
     for (let i = 1; i <= maxDegree; i++) {
         const option = document.createElement('option');

@@ -72,6 +72,14 @@
                 Розрахувати
             </button>
         </div>
+
+        <div id="errorModal">
+            <div id="errorModalContent">
+                <span id="closeButton" onclick="closeErrorModal()">&times;</span>
+                <p id="errorText"></p>
+            </div>
+        </div>
+
         <!-- Контейнер початкової матриці -->
         <div class="container mt-4" style="display: none">
             <h4 id="toggleVisible1" style="" class="text-center mb-4">
@@ -220,22 +228,26 @@
         const jSelect = document.getElementById("jSelect");
 
         handleDegreeChange('elementSelectFirst', 'numberSelectFirst');
-        handleDegreeChange('elementSelectSecond', 'numberSelectSecond');
+        {#handleDegreeChange('elementSelectSecond', 'numberSelectSecond');#}
+        iventSelectSecond()
         updateSelector(iSelect, numberSelectFirst.value);
         updateSelector(jSelect, numberSelectSecond.value);
-        updateR(numberSelectFirst.value)
+        updateR(numberSelectFirst.value);
+
 
         numberSelectFirst.addEventListener("change", () => {
             handleDegreeChange('elementSelectFirst', 'numberSelectFirst');
+            iventSelectSecond()
             updateSelector(iSelect, numberSelectFirst.value);
             updateSelector(jSelect, numberSelectSecond.value);
-            updateR(numberSelectFirst.value)
+            updateR(numberSelectFirst.value);
         });
 
         numberSelectSecond.addEventListener("change", () => {
             handleDegreeChange('elementSelectSecond', 'numberSelectSecond');
             updateSelector(iSelect, numberSelectFirst.value);
             updateSelector(jSelect, numberSelectSecond.value);
+            updateR(numberSelectFirst.value);
         });
 
         const buildMatrixButton = document.getElementById("buildMatrixButton");
@@ -246,6 +258,7 @@
             'iSelect',
             'jSelect',
             'rSelect'));
-        document.addEventListener("DOMContentLoaded", () => visualization());
+        {#document.addEventListener("DOMContentLoaded", () => visualization());#}
+
     </script>
 {% endblock content %}
