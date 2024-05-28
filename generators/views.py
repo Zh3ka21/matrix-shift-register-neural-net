@@ -4,7 +4,7 @@ from .models import Polynomial
 from django.http import JsonResponse
 from .SrwfCalculator.SrwfCalculator import SrwfCalculator
 from .MsrCalculator.MsrCalculator import MsrCalculator
-from .SrwfCalculator.PRNG import RandomNumberModel
+from .SrwfCalculator.PRNG import BinaryToAverageModel
 from .utils import validation, get_polynomials
 
 def base(request):
@@ -25,12 +25,18 @@ def handle_matrix_operations_view(request):
     polynomial_id = request.GET.get('polynomial_id')
     polynomial = Polynomial.objects.get(pk=polynomial_id)
     selected_number = int(request.GET.get('select'))
+    
     cal = SrwfCalculator()
     result = cal.calculate_srwf(polynomial, selected_number)
-    rnm = RandomNumberModel()
-    rnm.load_model()  # Load the model
-    r_n_lst = rnm.generate_random_numbers(n = 10)
-    result["rlst"] = r_n_lst
+    
+    btam = BinaryToAverageModel()
+    btam.load_model()
+    string_sequence = ''.join(map(str, result['sequence']))
+    binary_representations_to_predict = [string_sequence]
+    print(binary_representations_to_predict)   
+    predicted_average_numbers = btam.predict(binary_representations_to_predict)
+    result["rlst"] = predicted_average_numbers.tolist()
+    
     return JsonResponse({'result': result})
 
 def handle_matrix_operations_msr_view(request):

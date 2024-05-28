@@ -1,50 +1,46 @@
-import numpy as np
-from tensorflow.keras.models import Sequential, load_model # type: ignore
-from tensorflow.keras.layers import Dense, Lambda # type: ignore
-from keras.config import enable_unsafe_deserialization # type: ignore
+from sklearn.model_selection import train_test_split # type: ignore
+from tensorflow.keras.models import Sequential, load_model, save_model # type: ignore
+from tensorflow.keras.layers import Dense # type: ignore
+from tensorflow.keras.preprocessing.sequence import pad_sequences # type: ignore
+from keras.config import enable_unsafe_deserialization # type: ignore 
 
-class RandomNumberModel:
+import numpy as np
+import json
+
+
+class BinaryToAverageModel:
     def __init__(self):
         self.model = None
 
-    def create_model(self):
+    def create_model(self, input_shape):
         model = Sequential([
-            Dense(64, input_shape=(1,), activation='relu'),
+            Dense(64, input_shape=input_shape, activation='relu'),
             Dense(64, activation='relu'),
-            Dense(1, activation='linear'),  # Output layer for regression
-            Lambda(lambda x: x % 10)  # Ensure the output is in the range [0, 10)
+            Dense(1, activation='linear')
         ])
         model.compile(optimizer='adam', loss='mean_squared_error')
         self.model = model
 
-    def train_model(self):
-        # Generate training data
-        x_train = np.random.rand(10000, 1) * 10  # Inputs
-        y_train = np.random.rand(10000, 1) * 10  # Outputs (targets)
+    def train_model(self, X_train, y_train, epochs=100, batch_size=32, validation_data=None):
+        self.model.fit(X_train, y_train, epochs=epochs, batch_size=batch_size, validation_data=validation_data)
 
-        # Train the model
-        self.model.fit(x_train, y_train, epochs=100, batch_size=32)
+    def evaluate_model(self, X_test, y_test):
+        loss = self.model.evaluate(X_test, y_test)
+        print("Test Loss:", loss)
 
-    def save_model(self, filepath=r"neural_model\rnm.keras"):
-        self.model.save(filepath)
+    def save_model(self, filepath=r"neural_model\binary_to_average_model.keras"):
+        save_model(self.model, filepath)
 
-    def load_model(self, filepath=r"neural_model\rnm.keras"):
-        enable_unsafe_deserialization()  # Enable unsafe deserialization
-        self.model = load_model(filepath, compile=False)
-    
-    def generate_random_numbers(self, n):
-        # Generate n random inputs
-        x_input = np.random.rand(n, 1) * 10
-        predictions = self.model.predict(x_input)
+    def load_model(self, filepath=r"neural_model\binary_to_average_model.keras"):
+        self.model = load_model(filepath)
 
-        # Ensure the output is within the range [0, 10)
-        predictions = np.mod(predictions, 10)
+    def predict(self, binary_representations):
+        padded_binary_representations = pad_sequences([[int(bit) for bit in binary] for binary in binary_representations],
+                                                     maxlen=self.model.input_shape[1], padding='post')
+        predictions = self.model.predict(padded_binary_representations)
+        return predictions.flatten()
 
-        # Multiply to shift decimal point and convert to integers
-        integer_predictions = (predictions * 10**6).astype(int)
-
-        # Convert integers to strings without commas
-        formatted_numbers = [str(num) for num in integer_predictions.flatten()]
-
-        return formatted_numbers
-
+def load_data_from_json(json_file):
+    with open(json_file, 'r') as file:
+        data = json.load(file)
+    return data
