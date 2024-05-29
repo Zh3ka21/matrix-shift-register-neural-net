@@ -36,6 +36,7 @@ def handle_matrix_operations_view(request):
     print(binary_representations_to_predict)   
     predicted_average_numbers = btam.predict(binary_representations_to_predict)
     result["rlst"] = predicted_average_numbers.tolist()
+    result['erlst'] = len(predicted_average_numbers.tolist())/sum(predicted_average_numbers.tolist())
     
     return JsonResponse({'result': result})
 
@@ -50,13 +51,24 @@ def handle_matrix_operations_msr_view(request):
     j = int(request.GET.get('j'))
     r = int(request.GET.get('r'))
     try:
-        validate_result, error_message = validation(degreeFirst, polynomialFirst.first_number, degreeSecond,
-                                                    polynomialSecond.first_number)
+        validate_result, error_message = validation(
+            degreeFirst, polynomialFirst.first_number, degreeSecond,                                                    polynomialSecond.first_number
+        )
         if validate_result:
             raise ValidationError(error_message)
 
         cal = MsrCalculator()
         listResult = cal.calculate_msr(polynomialFirst, polynomialSecond, i, j, r)
+
+        btam = BinaryToAverageModel()
+        btam.load_model()
+        string_sequence = ''.join(map(str, listResult['sequence']))
+        binary_representations_to_predict = [string_sequence]
+        print(binary_representations_to_predict)   
+        predicted_average_numbers = btam.predict(binary_representations_to_predict)
+        listResult["mlst"] = predicted_average_numbers.tolist()
+        listResult['emlst'] = len(predicted_average_numbers.tolist())/sum(predicted_average_numbers.tolist())
+        
         return JsonResponse({'listResult': listResult})
     except ValidationError as e:
         return JsonResponse({'error': str(e)}, status=400)

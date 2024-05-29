@@ -101,6 +101,16 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2,
                 const matrixTableS = generateMatrixHTML(data.listResult["matrixS"][currentMatrixIndex]);
                 matrixContainerS.appendChild(matrixTableS);
 
+                const container = document.getElementById('PRNGM');
+                container.innerHTML = '';
+                const numbers = data.listResult.mlst;
+                console.log("Neurolink: " + data.result.mlst);
+                console.log("Expected: " + data.listResult.emlst);
+
+                const numberTextNode = document.createTextNode(numbers);
+                container.appendChild(numberTextNode);
+                container.style.display = 'block';
+
                 let nextMatrixButton = document.getElementById("nextMatrixButton");
                 if (!nextMatrixButton) {
                     nextMatrixButton = document.createElement("button");

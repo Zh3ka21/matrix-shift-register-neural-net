@@ -70,7 +70,9 @@ function handlePolynomialOperations() {
 
                 propertyContainer.append('Вага Хемінгу ' + data.result['hg'] + '; T(очікуване) ' + data.result['T_e'] + '; T(реальне) ' + data.result['T_r']);
                 polyContainer.append(data.result['poly'])
-                console.log(numbers);
+                console.log("Neurolink: " + data.result.rlst);
+                console.log("Expected: " + data.result.erlst);
+
                 const numberTextNode = document.createTextNode(numbers);
                 container.appendChild(numberTextNode);
                 container.style.display = 'block';  
