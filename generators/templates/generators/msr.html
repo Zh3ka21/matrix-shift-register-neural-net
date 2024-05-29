@@ -228,26 +228,26 @@
         const jSelect = document.getElementById("jSelect");
 
         handleDegreeChange('elementSelectFirst', 'numberSelectFirst');
-        {#handleDegreeChange('elementSelectSecond', 'numberSelectSecond');#}
-        iventSelectSecond()
+        handleDegreeChange('elementSelectSecond', 'numberSelectSecond');
+        {#iventSelectSecond()#}
         updateSelector(iSelect, numberSelectFirst.value);
         updateSelector(jSelect, numberSelectSecond.value);
-        updateR(numberSelectFirst.value);
+        updateR(numberSelectFirst.value, numberSelectSecond.value);
 
 
         numberSelectFirst.addEventListener("change", () => {
             handleDegreeChange('elementSelectFirst', 'numberSelectFirst');
-            iventSelectSecond()
+            {#iventSelectSecond()#}
             updateSelector(iSelect, numberSelectFirst.value);
             updateSelector(jSelect, numberSelectSecond.value);
-            updateR(numberSelectFirst.value);
+            updateR(numberSelectFirst.value, numberSelectSecond.value);
         });
 
         numberSelectSecond.addEventListener("change", () => {
             handleDegreeChange('elementSelectSecond', 'numberSelectSecond');
             updateSelector(iSelect, numberSelectFirst.value);
             updateSelector(jSelect, numberSelectSecond.value);
-            updateR(numberSelectFirst.value);
+            updateR(numberSelectFirst.value, numberSelectSecond.value);
         });
 
         const buildMatrixButton = document.getElementById("buildMatrixButton");

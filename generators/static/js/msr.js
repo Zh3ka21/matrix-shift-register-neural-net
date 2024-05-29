@@ -147,11 +147,11 @@ function updateSelector(selector, maxDegree) {
     }
 }
 
-function updateR(maxDegree) {
+function updateR(a, b) {
     const selector = document.getElementById("rSelect")
-
+    const d = a > b ? b : a
     selector.innerHTML = '';
-    for (let i = 1; i <= maxDegree; i++) {
+    for (let i = 1; i <= d; i++) {
         const option = document.createElement('option');
         option.value = i;
         option.textContent = i;

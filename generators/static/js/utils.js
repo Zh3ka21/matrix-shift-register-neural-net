@@ -42,27 +42,29 @@ function populateSelectOptions(data, elementId, valueProperty, textProperties) {
     elementSelect.disabled = false;
 }
 
-function createCharts(data, containerSelector, chunkSize = 2000, maxDataLength = 300) {
+function createCharts(data, containerSelector, chunkSize = 50000, maxDataLength = 300) {
+    console.log(data)
     containerSelector.innerHTML = '';
-    const chunkedData = [];
-    for (let i = 0; i < data.length; i += chunkSize) {
-        chunkedData.push(data.slice(i, i + chunkSize));
-    }
-    let indexOffs = 0;
-
     const charts = [];
-    for (let i = 0; i < chunkedData.length; i++) {
 
+    // Розділити дані на частини
+    for (let i = 0; i < data.length; i += chunkSize) {
+        const chunkedData = data.slice(i, i + chunkSize);
+
+        const labels = chunkedData.map((_, index) => index + 1 + i);
+        const dataset = {
+            label: 'Graph',
+            data: chunkedData,
+            borderColor: 'purple',
+            fill: false,
+        };
+
+        // Створення конфігурації графіка
         const config = {
             type: 'line',
             data: {
-                labels: chunkedData[i].map((_, index) => index + 1 + indexOffs),
-                datasets: [{
-                    label: 'Percentage (%)',
-                    data: chunkedData[i],
-                    borderColor: 'green',
-                    fill: false,
-                }]
+                labels: labels,
+                datasets: [dataset]
             },
             options: {
                 maintainAspectRatio: false,
@@ -73,15 +75,17 @@ function createCharts(data, containerSelector, chunkSize = 2000, maxDataLength =
                 }
             }
         };
-        indexOffs += chunkSize;
+
+        // Створення та додавання графіка
         const ctx = document.createElement('canvas');
         containerSelector.appendChild(ctx);
         const myChart = new Chart(ctx, config);
         charts.push(myChart);
     }
 
+    // Зміна ширини контейнера в разі, якщо довжина даних перевищує максимальну довжину
     if (data.length > maxDataLength) {
-        const newWidth = 700 + 20000;
+        const newWidth = 700 + 10000;
         containerSelector.style.width = `${newWidth}px`;
     }
 
