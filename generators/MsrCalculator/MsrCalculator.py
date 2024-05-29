@@ -120,12 +120,16 @@ class MsrCalculator:
         return poly[:-3] if poly else '0'
 
     @staticmethod
-    def get_acf(T, up_subsequence):
-        RCr = []
-        for tilda in range(T):
-            autocorr_sum = 0
-            for t in range(T - 1):
-                autocorr_sum += up_subsequence[t] * up_subsequence[(t + tilda) % (T - 1)]
-            RCr.append(autocorr_sum / (T))
+    def get_acf(T, binary_sequence):
+        acf = np.correlate(binary_sequence, binary_sequence, mode='full')
 
-        return RCr
+        # Нормалізувати за розміром і змінити тип даних на float
+        acf = acf.astype(float) / T
+
+        # Відкинути зайві значення (лишити лише значення для tilda від 0 до real_t-1)
+        acf = acf[len(acf) // 2:len(acf) // 2 + T]
+
+        # Додати симетричну частину
+        acf += acf[::-1]
+
+        return acf.tolist()
