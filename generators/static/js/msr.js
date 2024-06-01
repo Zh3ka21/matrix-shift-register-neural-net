@@ -104,7 +104,7 @@ function handlePolynomialOperations(elementSelectId1, elementSelectId2,
                 const container = document.getElementById('PRNGM');
                 container.innerHTML = '';
                 const numbers = data.listResult.mlst;
-                console.log("Neurolink: " + data.result.mlst);
+                console.log("Neurolink: " + data.listResult.mlst);
                 console.log("Expected: " + data.listResult.emlst);
 
                 const numberTextNode = document.createTextNode(numbers);

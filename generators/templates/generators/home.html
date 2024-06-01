@@ -16,11 +16,17 @@
       </div>
     </div>
     <div class="col">
-      <div class="p-4 bg-light rounded-3 h-100 d-flex flex-column align-items-start">
+      <div class="p-4 bg-light rounded-3 h-100 дфв flex-column align-items-start">
         <h2>Псевдовипадкова послідовність</h2>
         <p>Псевдовипадкова послідовність - це послідовність чисел, яка виглядає як випадкова послідовність, але фактично генерується детермінованим процесом. Такі послідовності широко використовуються в криптографії, моделюванні, тестуванні програм тощо.</p>
       </div>
     </div>
+  </div>
+  <div class="d-flex justify-content-center mt-4">
+    <a class="btn btn-primary mx-2" href="{% url 'display_excel' %}">View Excel</a>
+    <a class="btn btn-primary mx-2" href="{% url 'display_word' %}">View Word</a>
+    <a class="btn btn-primary mx-2" href="{% url 'download_excel' %}">Download Excel</a>
+    <a class="btn btn-primary mx-2" href="{% url 'download_word' %}">Download Word</a>
   </div>
 </div>
 {% endblock content %}
