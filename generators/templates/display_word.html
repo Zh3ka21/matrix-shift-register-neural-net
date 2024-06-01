@@ -1,0 +1,12 @@
+{% extends 'generators/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Word Document</h2>
+  <div class="word-content">
+    {% for paragraph in paragraphs %}
+      <p>{{ paragraph }}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}
