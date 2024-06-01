@@ -112,7 +112,7 @@ class MsrCalculator:
     def get_poly(second_digit_binary: list[int]):
         poly = ''
         binary_representation_copy = second_digit_binary.copy()
-        binary_representation_copy.insert(0, 1)
+        #binary_representation_copy.insert(0, 1)
         for i in range(len(binary_representation_copy)):
             if binary_representation_copy[i] == 1:
                 poly += f'x^{len(binary_representation_copy) - 1 - i} + '
