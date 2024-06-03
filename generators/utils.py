@@ -36,3 +36,15 @@ def get_polynomials(request):
     polynomials = Polynomial.objects.filter(degree=selected_degree).values('id', 'first_number', 'second_number',
                                                     'letter')
     return JsonResponse(list(polynomials), safe=False)
+
+
+def get_acf(self):
+        RCr = []
+        k = self.T_r  # Assuming self.T is the length of the sequence
+        for tilda in range(k):
+            autocorr_sum = 0
+            for t in range(k):
+                autocorr_sum += self.binary_sequence[t] * self.binary_sequence[(t + tilda) % k]
+            RCr.append(autocorr_sum / k)
+
+        return RCr

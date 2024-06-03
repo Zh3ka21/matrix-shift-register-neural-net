@@ -51,7 +51,7 @@ function createCharts(data, containerSelector, chunkSize = 50000, maxDataLength 
     for (let i = 0; i < data.length; i += chunkSize) {
         const chunkedData = data.slice(i, i + chunkSize);
 
-        const labels = chunkedData.map((_, index) => index + 1 + i);
+        const labels = chunkedData.map((_, index) => index + i);
         const dataset = {
             label: 'Graph',
             data: chunkedData,

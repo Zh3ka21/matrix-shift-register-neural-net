@@ -83,16 +83,27 @@ class SrwfCalculator:
         return poly[:-3] if poly else '0'
 
     @staticmethod
-    def get_acf(T, binary_sequence):
-        acf = np.correlate(binary_sequence, binary_sequence, mode='full')
+    def get_acf(T_r, binary_sequence):
+        RCr = []
+        k = T_r  # Assuming self.T is the length of the sequence
+        for tilda in range(k+1):
+            autocorr_sum = 0
+            for t in range(k):
+                autocorr_sum += binary_sequence[t] * binary_sequence[(t + tilda) % k]
+            RCr.append(autocorr_sum / k)
+        return RCr
+    
+    
+    # def get_acf(T, binary_sequence):
+    #     acf = np.correlate(binary_sequence, binary_sequence, mode='full')
 
-        # Нормалізувати за розміром і змінити тип даних на float
-        acf = acf.astype(float) / T
+    #     # Нормалізувати за розміром і змінити тип даних на float
+    #     acf = acf.astype(float) / T
 
-        # Відкинути зайві значення (лишити лише значення для tilda від 0 до real_t-1)
-        acf = acf[len(acf) // 2:len(acf) // 2 + T]
+    #     # Відкинути зайві значення (лишити лише значення для tilda від 0 до real_t-1)
+    #     acf = acf[len(acf) // 2:len(acf) // 2 + T]
 
-        # Додати симетричну частину
-        acf += acf[::-1]
+    #     # Додати симетричну частину
+    #     acf += acf[::-1]
 
-        return acf.tolist()
+    #     return acf.tolist()
